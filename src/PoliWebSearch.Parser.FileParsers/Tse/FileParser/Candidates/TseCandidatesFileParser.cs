@@ -1,11 +1,14 @@
-﻿using PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates;
+﻿using CsvHelper;
+using CsvHelper.Configuration;
+using PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates;
 using PoliWebSearch.Parser.Shared.Models;
 using PoliWebSearch.Parser.Shared.Services.File;
 using PoliWebSearch.Parser.Shared.Services.Log;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
-using System.Text;
-using TinyCsvParser;
 
 namespace PoliWebSearch.Parser.Tse.FileParsers.Candidates
 {
@@ -24,20 +27,23 @@ namespace PoliWebSearch.Parser.Tse.FileParsers.Candidates
         {
             List<TseCandidateModel> list = new List<TseCandidateModel>();
 
-            try {
-                CsvParserOptions csvParserOptions = new CsvParserOptions(false, ';');
-                TseCandidateDataMapping csvMapper = new TseCandidateDataMapping();
-                CsvParser<TseCandidateModel> csvParser = new CsvParser<TseCandidateModel>(csvParserOptions, csvMapper);
-                return csvParser.ReadFromFile(filePath, Encoding.ASCII)
-                    .Where(x => x.IsValid)
-                    .Select(x => x.Result)
-                    .ToList();
-            }
-            catch (System.Exception) {
-                logService.Log($"Unable to parse file: {filePath}");
-                return list;
-            }
+            var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture) {
+                Delimiter = ";",
+                BadDataFound = null,
+            };
 
+            try {
+                using (var reader = new StreamReader(filePath))
+                using (var csv = new CsvReader(reader, csvConfig)) {
+                    csv.Context.RegisterClassMap<TseCandidateModelMapping>();
+                    list = csv.GetRecords<TseCandidateModel>().ToList();
+                }
+            }
+            catch (Exception e) {
+                logService.Log($"Unable to parse file: {filePath}");
+                logService.Log(e.Message);
+            }
+            return list;
         }
     }
 }
