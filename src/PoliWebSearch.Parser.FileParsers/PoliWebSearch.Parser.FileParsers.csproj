@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TinyCsvParser" Version="2.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PoliWebSearch.Parser.Shared\PoliWebSearch.Parser.Shared.csproj" />
+    <ProjectReference Include="..\PoliWebSerach.Parser.DB\PoliWebSerach.Parser.DB.csproj" />
+  </ItemGroup>
+
+</Project>
