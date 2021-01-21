@@ -1,11 +1,13 @@
 ﻿using Autofac;
 using PoliWebSearch.Parser.ConsoleApp.Commands;
 using PoliWebSearch.Parser.Shared.Configurator;
+using PoliWebSearch.Parser.Shared.Resolver;
 using PoliWebSearch.Parser.Shared.Services.Clock;
 using PoliWebSearch.Parser.Shared.Services.File;
 using PoliWebSearch.Parser.Shared.Services.Log;
 using PoliWebSearch.Parser.Tse.FileParsers.Candidates;
 using PoliWebSearch.Parser.Tse.Service;
+using PoliWebSerach.Parser.DB.Operator;
 using PoliWebSerach.Parser.DB.Services;
 using System;
 using System.Threading.Tasks;
@@ -24,7 +26,13 @@ namespace PoliWebSearch.Parser.ConsoleApp
 
         static void Main(string[] args)
         {
-            MainAsync(args).Wait();
+            try {
+                MainAsync(args).Wait();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
         private async static Task MainAsync(string[] args)
@@ -66,6 +74,8 @@ namespace PoliWebSearch.Parser.ConsoleApp
             builder.RegisterType<FileService>().As<IFileService>().SingleInstance();
             builder.RegisterType<ClockService>().As<IClockService>().SingleInstance();
             builder.RegisterType<DatabaseService>().As<IDatabaseService>().SingleInstance();
+            builder.RegisterType<DatabaseOperator>().As<IDatabaseOperator>();
+            builder.RegisterType<ServiceResolver>().As<IServiceResolver>().SingleInstance();
             container = builder.Build();
         }
 
@@ -79,7 +89,9 @@ namespace PoliWebSearch.Parser.ConsoleApp
         private static void InitializeIntefaces(string envPath)
         {
             logService.Initialize();
+            container.Resolve<IServiceResolver>().Initialize(container);
             configuratorService.Initialize(envPath);
+            container.Resolve<IDatabaseService>().Initialize();
         }
 
     }

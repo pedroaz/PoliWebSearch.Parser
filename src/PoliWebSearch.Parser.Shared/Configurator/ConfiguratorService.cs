@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -14,6 +15,7 @@ namespace PoliWebSearch.Parser.Shared.Configurator
         public void Initialize(string envDir)
         {
             appConfiguration = new AppConfigurationData();
+            appConfiguration = JsonConvert.DeserializeObject<AppConfigurationData>(File.ReadAllText(Path.Combine(envDir, "appConfig.json")));
             appConfiguration.EnvDirectory = envDir;
             appConfiguration.StorageDirectory = Path.Join(envDir, "storage");
         }
