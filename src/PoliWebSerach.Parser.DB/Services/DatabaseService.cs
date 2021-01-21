@@ -34,13 +34,24 @@ namespace PoliWebSerach.Parser.DB.Services
             server = new GremlinServer(configuratorService.AppConfig.HostName, 443, true, userName, configuratorService.AppConfig.MasterKey);
         }
 
-        public async Task AddVertices<T>(List<T> list, string label, string partitionKey)
+        public async Task AddVertices(List<dynamic> list, string label, string partitionKey)
         {
             var databaseOperator = serviceResolver.ResolveService<IDatabaseOperator>().Initialize(server);
             foreach (var item in list) {
-                databaseOperator.AddVertice(item, partitionKey, label);
+                databaseOperator.AddVerticeQuery(item, partitionKey, label);
             }
-            await clockService.ExecuteWithStopWatchAsync("Executing batch operations on database", async () => {
+            await clockService.ExecuteWithStopWatchAsync("Executing AddVertices batch operations on database", async () => {
+                await databaseOperator.ExecuteOperations();
+            });
+        }
+
+        public async Task AddEdges(List<dynamic> list, string label, VerticeFilter fromVerticeFilter, VerticeFilter toVerticeFilter)
+        {
+            var databaseOperator = serviceResolver.ResolveService<IDatabaseOperator>().Initialize(server);
+            foreach (var item in list) {
+                databaseOperator.AddEdgeQuery(item, label, fromVerticeFilter, toVerticeFilter);
+            }
+            await clockService.ExecuteWithStopWatchAsync("Executing AddEdges batch operations on database", async () => {
                 await databaseOperator.ExecuteOperations();
             });
         }

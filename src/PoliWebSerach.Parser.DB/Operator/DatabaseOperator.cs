@@ -19,22 +19,23 @@ namespace PoliWebSerach.Parser.DB.Operator
             return this;
         }
 
-        public IDatabaseOperator AddVertice<T>(T verticeObj, string partitionKey, string label)
+        public void AddVerticeQuery(dynamic verticeObj, string partitionKey, string label)
         {
-            var properties = verticeObj.GetType().GetProperties();
             StringBuilder stringBuilder = new StringBuilder($@"g.addV('{label}').property('pk', '{partitionKey}')");
-
-            foreach (var property in properties) {
-                var propertyName = property.Name;
-                var propertyValue = property.GetValue(verticeObj);
-                stringBuilder.Append($@".property('{propertyName}', '{propertyValue}')");
-            }
-
+            AddPropertiesToQuery(verticeObj, stringBuilder);
             queries.Add(stringBuilder.ToString());
-            return this;
         }
 
-        public Task GetVertices()
+        public void AddEdgeQuery(dynamic edgeObj, string edgeLabel, VerticeFilter fromVerticeFilter, VerticeFilter toVerticeFilter)
+        {
+            StringBuilder stringBuilder = new StringBuilder($@"g.V().has('{fromVerticeFilter.PropertyName}', '{fromVerticeFilter.PropertyValue}')");
+            stringBuilder.Append($@".addE('{edgeLabel}')");
+            AddPropertiesToQuery(edgeObj, stringBuilder);
+            stringBuilder.Append($@".to(g.V().has('{toVerticeFilter.PropertyName}', '{toVerticeFilter.PropertyValue}'))");
+            queries.Add(stringBuilder.ToString());
+        }
+
+        public Task GetVertices(VerticeFilter filter)
         {
             throw new NotImplementedException();
         }
@@ -45,6 +46,16 @@ namespace PoliWebSerach.Parser.DB.Operator
 
             foreach (var query in queries) {
                 await client.SubmitAsync(query);
+            }
+        }
+
+
+        private void AddPropertiesToQuery(dynamic obj, StringBuilder stringBuilder)
+        {
+            foreach (var property in obj.GetType().GetProperties()) {
+                var propertyName = property.Name;
+                var propertyValue = property.GetValue(obj);
+                stringBuilder.Append($@".property('{propertyName}', '{propertyValue}')");
             }
         }
     }

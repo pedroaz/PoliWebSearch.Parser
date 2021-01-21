@@ -9,8 +9,9 @@ namespace PoliWebSerach.Parser.DB.Operator
     public interface IDatabaseOperator
     {
         IDatabaseOperator Initialize(GremlinServer server);
-        IDatabaseOperator AddVertice<T>(T verticeObj, string partitionKey, string label);
+        void AddVerticeQuery(dynamic verticeObj, string partitionKey, string label);
+        void AddEdgeQuery(dynamic edgeObj, string edgeLabel, VerticeFilter fromVerticeFilter, VerticeFilter toVerticeFilter);
         Task ExecuteOperations();
-        Task GetVertices();
+        Task GetVertices(VerticeFilter filter);
     }
 }
