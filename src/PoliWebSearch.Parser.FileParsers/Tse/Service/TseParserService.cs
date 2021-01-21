@@ -4,6 +4,7 @@ using PoliWebSearch.Parser.Shared.Services.Clock;
 using PoliWebSearch.Parser.Shared.Services.File;
 using PoliWebSearch.Parser.Shared.Services.Log;
 using PoliWebSearch.Parser.Tse.FileParsers.Candidates;
+using PoliWebSerach.Parser.DB.Services;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -23,15 +24,17 @@ namespace PoliWebSearch.Parser.Tse.Service
         private readonly ITseCandidatesFileParser candidatesFileParser;
         private readonly IFileService fileService;
         private readonly IClockService clockService;
+        private readonly IDatabaseService databaseService;
 
         public TseParserService(ILogService logService, IConfiguratorService configurator, ITseCandidatesFileParser candidatesFileParser,
-            IFileService fileService, IClockService clockService)
+            IFileService fileService, IClockService clockService, IDatabaseService databaseService)
         {
             this.logService = logService;
             this.configurator = configurator;
             this.candidatesFileParser = candidatesFileParser;
             this.fileService = fileService;
             this.clockService = clockService;
+            this.databaseService = databaseService;
         }
 
         public async Task<int> ParseFiles(TseDataSourceType dataSource)
@@ -39,7 +42,7 @@ namespace PoliWebSearch.Parser.Tse.Service
             logService.Log("Starting to parse tse files");
             switch (dataSource) {
                 case TseDataSourceType.candidatos:
-                    ParseCandidates();
+                    await ParseCandidates();
                     break;
                 case TseDataSourceType.resultados:
                     break;
@@ -50,7 +53,7 @@ namespace PoliWebSearch.Parser.Tse.Service
             return 0;
         }
 
-        private void ParseCandidates()
+        private async Task ParseCandidates()
         {
             string dirPath = Path.Join(configurator.AppConfig.StorageDirectory, "Tse", "Candidatos");
             if (!fileService.DirExists(dirPath)) return;
@@ -63,6 +66,8 @@ namespace PoliWebSearch.Parser.Tse.Service
                 }
             });
             logService.Log($"Amount of records {list.Count}");
+
+            await databaseService.AddVertices(new List<TseCandidateModel>(){ list[0] }, "person", "1");
         }
     }
 }
