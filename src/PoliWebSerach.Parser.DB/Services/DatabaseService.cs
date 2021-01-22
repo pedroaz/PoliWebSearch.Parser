@@ -34,7 +34,7 @@ namespace PoliWebSerach.Parser.DB.Services
             server = new GremlinServer(configuratorService.AppConfig.HostName, 443, true, userName, configuratorService.AppConfig.MasterKey);
         }
 
-        public async Task AddVertices(List<dynamic> list, string label, string partitionKey)
+        public async Task AddVertices<T>(List<T> list, string label, string partitionKey)
         {
             var databaseOperator = serviceResolver.ResolveService<IDatabaseOperator>().Initialize(server);
             foreach (var item in list) {
@@ -45,15 +45,29 @@ namespace PoliWebSerach.Parser.DB.Services
             });
         }
 
-        public async Task AddEdges(List<dynamic> list, string label, VerticeFilter fromVerticeFilter, VerticeFilter toVerticeFilter)
+        public async Task AddEdges<T>(List<T> list, string label, List<VerticeFilter> fromFilters, List<VerticeFilter> toFilters)
         {
             var databaseOperator = serviceResolver.ResolveService<IDatabaseOperator>().Initialize(server);
-            foreach (var item in list) {
-                databaseOperator.AddEdgeQuery(item, label, fromVerticeFilter, toVerticeFilter);
+
+            for (int i = 0; i < list.Count; i++) {
+                T obj = list[i];
+                var fromFilter = fromFilters[i];
+                var toFilter = toFilters[i];
+                databaseOperator.AddEdgeQuery(obj, label, fromFilter, toFilter);
             }
             await clockService.ExecuteWithStopWatchAsync("Executing AddEdges batch operations on database", async () => {
                 await databaseOperator.ExecuteOperations();
             });
+        }
+
+        public async Task ExecuteCustomQuery(string query)
+        {
+            var databaseOperator = serviceResolver.ResolveService<IDatabaseOperator>().Initialize(server);
+            databaseOperator.AddCustomQuery(query);
+            await clockService.ExecuteWithStopWatchAsync($"Executing Custom query database: {query}", async () => {
+                await databaseOperator.ExecuteOperations();
+            });
+
         }
     }
 }

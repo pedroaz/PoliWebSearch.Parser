@@ -43,12 +43,10 @@ namespace PoliWebSerach.Parser.DB.Operator
         public async Task ExecuteOperations()
         {
             using var client = new GremlinClient(server, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType);
-
             foreach (var query in queries) {
                 await client.SubmitAsync(query);
             }
         }
-
 
         private void AddPropertiesToQuery(dynamic obj, StringBuilder stringBuilder)
         {
@@ -57,6 +55,11 @@ namespace PoliWebSerach.Parser.DB.Operator
                 var propertyValue = property.GetValue(obj);
                 stringBuilder.Append($@".property('{propertyName}', '{propertyValue}')");
             }
+        }
+
+        public void AddCustomQuery(string customQuery)
+        {
+            queries.Add(customQuery);
         }
     }
 }

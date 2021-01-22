@@ -26,6 +26,7 @@ namespace PoliWebSearch.Parser.ConsoleApp
 
         static void Main(string[] args)
         {
+
             try {
                 MainAsync(args).Wait();
             }

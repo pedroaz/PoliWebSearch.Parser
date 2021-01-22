@@ -5,6 +5,6 @@ namespace PoliWebSearch.Parser.Tse.FileParsers.Candidates
 {
     public interface ITseCandidatesFileParser
     {
-        List<TseCandidateModel> ParseFile(string filePath);
+        List<TseCandidateFileModel> ParseFile(string filePath);
     }
 }

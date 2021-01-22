@@ -15,17 +15,15 @@ namespace PoliWebSearch.Parser.Tse.FileParsers.Candidates
     public class TseCandidatesFileParser : ITseCandidatesFileParser
     {
         private readonly ILogService logService;
-        private readonly IFileService fileSystem;
 
-        public TseCandidatesFileParser(ILogService logService, IFileService fileSystem)
+        public TseCandidatesFileParser(ILogService logService)
         {
             this.logService = logService;
-            this.fileSystem = fileSystem;
         }
 
-        public List<TseCandidateModel> ParseFile(string filePath)
+        public List<TseCandidateFileModel> ParseFile(string filePath)
         {
-            List<TseCandidateModel> list = new List<TseCandidateModel>();
+            List<TseCandidateFileModel> list = new List<TseCandidateFileModel>();
 
             var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture) {
                 Delimiter = ";",
@@ -36,7 +34,7 @@ namespace PoliWebSearch.Parser.Tse.FileParsers.Candidates
                 using (var reader = new StreamReader(filePath))
                 using (var csv = new CsvReader(reader, csvConfig)) {
                     csv.Context.RegisterClassMap<TseCandidateModelMapping>();
-                    list = csv.GetRecords<TseCandidateModel>().ToList();
+                    list = csv.GetRecords<TseCandidateFileModel>().ToList();
                 }
             }
             catch (Exception e) {
