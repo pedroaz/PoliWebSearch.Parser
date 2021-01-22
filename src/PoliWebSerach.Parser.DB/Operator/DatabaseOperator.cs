@@ -4,14 +4,29 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Dasync.Collections;
+using PoliWebSearch.Parser.Shared.Services.Log;
+using System.Linq;
 
 namespace PoliWebSerach.Parser.DB.Operator
 {
     public class DatabaseOperator : IDatabaseOperator
     {
+
+        private readonly ILogService logService;
+
         public string operationGUID = Guid.NewGuid().ToString();
         private GremlinServer server;
         private List<string> queries = new List<string>();
+
+        private List<string> failedQueries = new List<string>();
+        private int failureAtempt = 0;
+        private object failureLock = new object();
+
+        public DatabaseOperator(ILogService logService)
+        {
+            this.logService = logService;
+        }
 
         public IDatabaseOperator Initialize(GremlinServer server)
         {
@@ -43,9 +58,35 @@ namespace PoliWebSerach.Parser.DB.Operator
         public async Task ExecuteOperations()
         {
             using var client = new GremlinClient(server, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType);
-            foreach (var query in queries) {
-                await client.SubmitAsync(query);
+
+            await ExecuteQueryList(client);
+
+            while (failureAtempt < 6 && failedQueries.Any()) {
+                logService.Log($"Oh no, we are retrying {failedQueries.Count} because they failed. Retry count: {failureAtempt}");
+                queries = failedQueries;
+                failedQueries = new List<string>();
+                await ExecuteQueryList(client);
+                failureAtempt++;
             }
+        }
+
+        private async Task ExecuteQueryList(GremlinClient client)
+        {
+            logService.Log($"Executing {queries.Count} queries");
+
+            await queries.ParallelForEachAsync(async (query) => {
+                try {
+                    await client.SubmitAsync(query);
+                }
+                catch (Exception e) {
+
+                    logService.Log($"Failed to execute query: {query}");
+                    logService.Log(e.Message);
+                    lock (failureLock) {
+                        failedQueries.Add(query);
+                    }
+                }
+            }, maxDegreeOfParallelism: 10);
         }
 
         private void AddPropertiesToQuery(dynamic obj, StringBuilder stringBuilder)

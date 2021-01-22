@@ -70,7 +70,11 @@ namespace PoliWebSearch.Parser.Tse.Service
                     list.AddRange(candidatesFileParser.ParseFile(file));
                 }
             });
+
+            list = list.Take(500).ToList();
+
             logService.Log($"Amount of records {list.Count}");
+
 
             await databaseService.ExecuteCustomQuery("g.V().drop()");
             await InserPoliticalPartyVertices(list);
