@@ -1,14 +1,15 @@
 ﻿using Autofac;
 using PoliWebSearch.Parser.ConsoleApp.Commands;
+using PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates;
+using PoliWebSearch.Parser.FileParsers.Tse.Service;
 using PoliWebSearch.Parser.Shared.Configurator;
 using PoliWebSearch.Parser.Shared.Resolver;
 using PoliWebSearch.Parser.Shared.Services.Clock;
 using PoliWebSearch.Parser.Shared.Services.File;
 using PoliWebSearch.Parser.Shared.Services.Log;
-using PoliWebSearch.Parser.Tse.FileParsers.Candidates;
-using PoliWebSearch.Parser.Tse.Service;
 using PoliWebSerach.Parser.DB.Operator;
-using PoliWebSerach.Parser.DB.Services;
+using PoliWebSerach.Parser.DB.Services.Admin;
+using PoliWebSerach.Parser.DB.Services.Database;
 using System;
 using System.Threading.Tasks;
 

@@ -1,7 +1,4 @@
 ﻿using Gremlin.Net.Driver;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PoliWebSerach.Parser.DB.Operator

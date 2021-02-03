@@ -1,5 +1,5 @@
 ﻿using CommandLine;
-using PoliWebSearch.Parser.Tse.Service;
+using PoliWebSearch.Parser.FileParsers.Tse.Service;
 
 namespace PoliWebSearch.Parser.ConsoleApp.Commands.Options
 {

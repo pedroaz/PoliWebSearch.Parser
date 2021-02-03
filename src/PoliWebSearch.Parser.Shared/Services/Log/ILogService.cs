@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PoliWebSearch.Parser.Shared.Services.Log
+﻿namespace PoliWebSearch.Parser.Shared.Services.Log
 {
     public interface ILogService
     {

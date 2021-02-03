@@ -1,20 +1,22 @@
-﻿using PoliWebSearch.Parser.Shared.Configurator;
-using PoliWebSearch.Parser.Shared.Models;
+﻿using MoreLinq.Extensions;
+using PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates;
+using PoliWebSearch.Parser.Shared.Configurator;
+using PoliWebSearch.Parser.Shared.Models.Edges;
+using PoliWebSearch.Parser.Shared.Models.Person;
+using PoliWebSearch.Parser.Shared.Models.PoliticalParty;
 using PoliWebSearch.Parser.Shared.Models.Tse;
 using PoliWebSearch.Parser.Shared.Services.Clock;
 using PoliWebSearch.Parser.Shared.Services.File;
 using PoliWebSearch.Parser.Shared.Services.Log;
-using PoliWebSearch.Parser.Tse.FileParsers.Candidates;
 using PoliWebSerach.Parser.DB.Operator;
-using PoliWebSerach.Parser.DB.Services;
+using PoliWebSerach.Parser.DB.Services.Admin;
+using PoliWebSerach.Parser.DB.Services.Database;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using MoreLinq.Extensions;
 
-namespace PoliWebSearch.Parser.Tse.Service
+namespace PoliWebSearch.Parser.FileParsers.Tse.Service
 {
     public enum TseDataSourceType
     {
@@ -77,7 +79,7 @@ namespace PoliWebSearch.Parser.Tse.Service
                 }
             });
 
-            if(rowLimit > 0) {
+            if (rowLimit > 0) {
                 list = list.Take(rowLimit).ToList();
             }
 

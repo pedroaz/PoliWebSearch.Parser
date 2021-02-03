@@ -1,8 +1,6 @@
 ﻿using PoliWebSearch.Parser.Shared.Services.Log;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PoliWebSearch.Parser.Shared.Services.Clock

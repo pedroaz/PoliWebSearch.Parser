@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using Gremlin.Net.Driver.Exceptions;
+using Newtonsoft.Json;
 using PoliWebSearch.Parser.Shared.Services.Log;
-using System.Threading.Tasks;
-using System.Linq;
+using PoliWebSerach.Parser.DB.Services.Database;
 using System.Collections.Generic;
-using System;
-using Gremlin.Net.Driver.Exceptions;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace PoliWebSerach.Parser.DB.Services
+namespace PoliWebSerach.Parser.DB.Services.Admin
 {
     public enum AdminOperations
     {
@@ -43,7 +43,7 @@ namespace PoliWebSerach.Parser.DB.Services
                 try {
                     await databaseService.ExecuteCustomQuery("g.V().drop()");
                 }
-                catch (ResponseException e) {
+                catch (ResponseException) {
                     logService.Log("Server probabbbly timed out. But that's expected, executing the drop query again!");
                 }
             } while (await CountDatabase() > 0);

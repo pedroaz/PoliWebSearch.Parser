@@ -1,5 +1,5 @@
 ﻿using CsvHelper.Configuration;
-using PoliWebSearch.Parser.Shared.Models;
+using PoliWebSearch.Parser.Shared.Models.Tse;
 
 namespace PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates
 {

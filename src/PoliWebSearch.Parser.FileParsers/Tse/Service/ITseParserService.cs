@@ -1,8 +1,6 @@
-﻿
-using PoliWebSearch.Parser.Tse.Service;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace PoliWebSearch.Parser.Tse.Service
+namespace PoliWebSearch.Parser.FileParsers.Tse.Service
 {
     public interface ITseParserService
     {

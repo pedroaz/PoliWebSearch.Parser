@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PoliWebSearch.Parser.Shared.Models.Tse
+﻿namespace PoliWebSearch.Parser.Shared.Models.Person
 {
     public class PersonVertice : GeneralDataModel
     {

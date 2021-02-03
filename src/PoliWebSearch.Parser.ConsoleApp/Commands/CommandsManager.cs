@@ -1,8 +1,8 @@
 ﻿using CommandLine;
 using PoliWebSearch.Parser.ConsoleApp.Commands.Options;
+using PoliWebSearch.Parser.FileParsers.Tse.Service;
 using PoliWebSearch.Parser.Shared.Services.Log;
-using PoliWebSearch.Parser.Tse.Service;
-using PoliWebSerach.Parser.DB.Services;
+using PoliWebSerach.Parser.DB.Services.Admin;
 using System;
 using System.Threading.Tasks;
 

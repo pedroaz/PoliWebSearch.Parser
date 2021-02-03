@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace PoliWebSerach.Parser.DB.Services
+namespace PoliWebSerach.Parser.DB.Services.Admin
 {
     public interface IAdminService
     {

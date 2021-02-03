@@ -1,18 +1,12 @@
 ﻿using Gremlin.Net.Driver;
-using Gremlin.Net.Driver.Exceptions;
-using Gremlin.Net.Structure.IO.GraphSON;
-using Newtonsoft.Json;
 using PoliWebSearch.Parser.Shared.Configurator;
-using PoliWebSearch.Parser.Shared.Models;
 using PoliWebSearch.Parser.Shared.Resolver;
 using PoliWebSearch.Parser.Shared.Services.Clock;
 using PoliWebSerach.Parser.DB.Operator;
-using System;
 using System.Collections.Generic;
-using System.Net.WebSockets;
 using System.Threading.Tasks;
 
-namespace PoliWebSerach.Parser.DB.Services
+namespace PoliWebSerach.Parser.DB.Services.Database
 {
     public class DatabaseService : IDatabaseService
     {

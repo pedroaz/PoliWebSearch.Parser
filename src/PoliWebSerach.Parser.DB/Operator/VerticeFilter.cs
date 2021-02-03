@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PoliWebSerach.Parser.DB.Operator
+﻿namespace PoliWebSerach.Parser.DB.Operator
 {
     public class VerticeFilter
     {

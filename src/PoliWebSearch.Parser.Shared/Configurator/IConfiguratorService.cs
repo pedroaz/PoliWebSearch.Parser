@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PoliWebSearch.Parser.Shared.Configurator
+﻿namespace PoliWebSearch.Parser.Shared.Configurator
 {
     public interface IConfiguratorService
     {

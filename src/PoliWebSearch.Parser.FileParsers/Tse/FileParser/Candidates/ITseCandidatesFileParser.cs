@@ -1,7 +1,7 @@
-﻿using PoliWebSearch.Parser.Shared.Models;
+﻿using PoliWebSearch.Parser.Shared.Models.Tse;
 using System.Collections.Generic;
 
-namespace PoliWebSearch.Parser.Tse.FileParsers.Candidates
+namespace PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates
 {
     public interface ITseCandidatesFileParser
     {

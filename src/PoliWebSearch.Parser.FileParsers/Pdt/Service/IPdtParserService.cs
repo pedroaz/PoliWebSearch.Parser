@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PoliWebSearch.Parser.Pdt.Service
+﻿namespace PoliWebSearch.Parser.FileParsers.Pdt.Service
 {
     public interface IPdtParserService
     {

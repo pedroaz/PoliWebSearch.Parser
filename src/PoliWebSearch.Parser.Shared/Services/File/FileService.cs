@@ -1,9 +1,7 @@
 ﻿using PoliWebSearch.Parser.Shared.Services.Log;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace PoliWebSearch.Parser.Shared.Services.File
 {

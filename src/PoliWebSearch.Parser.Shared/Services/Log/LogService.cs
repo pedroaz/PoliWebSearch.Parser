@@ -1,9 +1,6 @@
 ﻿using Serilog;
 using Serilog.Core;
-using Serilog.Events;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PoliWebSearch.Parser.Shared.Services.Log
 {

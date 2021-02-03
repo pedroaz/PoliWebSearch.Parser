@@ -1,14 +1,14 @@
-﻿using Gremlin.Net.Driver;
+﻿using Dasync.Collections;
+using Gremlin.Net.Driver;
 using Gremlin.Net.Structure.IO.GraphSON;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using PoliWebSearch.Parser.Shared.Services.Log;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dasync.Collections;
-using PoliWebSearch.Parser.Shared.Services.Log;
-using System.Linq;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
 namespace PoliWebSerach.Parser.DB.Operator
 {

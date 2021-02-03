@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using PoliWebSearch.Parser.Shared.Models.Tse;
 
-namespace PoliWebSearch.Parser.Shared.Models.Tse
+namespace PoliWebSearch.Parser.Shared.Models.PoliticalParty
 {
     public class PoliticalPartyVertice : TseDataModel
     {

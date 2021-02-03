@@ -1,9 +1,8 @@
-﻿using PoliWebSearch.Parser.Shared.Models;
-using PoliWebSerach.Parser.DB.Operator;
+﻿using PoliWebSerach.Parser.DB.Operator;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PoliWebSerach.Parser.DB.Services
+namespace PoliWebSerach.Parser.DB.Services.Database
 {
     public interface IDatabaseService
     {

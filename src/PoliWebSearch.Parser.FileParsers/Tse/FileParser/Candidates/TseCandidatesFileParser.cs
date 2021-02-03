@@ -1,8 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates;
-using PoliWebSearch.Parser.Shared.Models;
-using PoliWebSearch.Parser.Shared.Services.File;
+using PoliWebSearch.Parser.Shared.Models.Tse;
 using PoliWebSearch.Parser.Shared.Services.Log;
 using System;
 using System.Collections.Generic;
@@ -10,7 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
-namespace PoliWebSearch.Parser.Tse.FileParsers.Candidates
+namespace PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates
 {
     public class TseCandidatesFileParser : ITseCandidatesFileParser
     {
