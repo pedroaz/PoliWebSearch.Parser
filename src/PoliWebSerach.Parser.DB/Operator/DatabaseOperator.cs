@@ -24,6 +24,7 @@ namespace PoliWebSerach.Parser.DB.Operator
         private List<string> failedQueries = new List<string>();
         private int failureAtempt = 0;
         private object failureLock = new object();
+        private int internalLogCounter = 0;
 
         public DatabaseOperator(ILogService logService)
         {
@@ -79,6 +80,7 @@ namespace PoliWebSerach.Parser.DB.Operator
             await queries.ParallelForEachAsync(async (query) => {
                 try {
                     await client.SubmitAsync(query);
+                    InternalLogToConsole();
                 }
                 catch (Exception e) {
 
@@ -89,6 +91,14 @@ namespace PoliWebSerach.Parser.DB.Operator
                     }
                 }
             }, maxDegreeOfParallelism: 10);
+        }
+
+        private void InternalLogToConsole()
+        {
+            internalLogCounter++;
+            var number = (internalLogCounter / (float)queries.Count);
+            var sformatted = string.Format("{0:0.##\\%}", number);
+            logService.LogToConsole($"\rPercentage of Execution ({internalLogCounter}/{queries.Count}): {sformatted}");
         }
 
         private void AddPropertiesToQuery(dynamic obj, StringBuilder stringBuilder)

@@ -22,5 +22,10 @@ namespace PoliWebSearch.Parser.Shared.Services.Log
         {
             logger.Information(message);
         }
+
+        public void LogToConsole(string message)
+        {
+            Console.Write(message);
+        }
     }
 }

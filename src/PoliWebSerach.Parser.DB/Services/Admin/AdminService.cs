@@ -3,6 +3,8 @@ using PoliWebSearch.Parser.Shared.Services.Log;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
+using System;
+using Gremlin.Net.Driver.Exceptions;
 
 namespace PoliWebSerach.Parser.DB.Services
 {
@@ -32,9 +34,18 @@ namespace PoliWebSerach.Parser.DB.Services
 
         public async Task DropDatabase()
         {
+
+            logService.Log("Droping the database. This operation may take a while");
+
             await CountDatabase();
             do {
-                await databaseService.ExecuteCustomQuery("g.V().drop()");
+                logService.Log("Executing the drop query");
+                try {
+                    await databaseService.ExecuteCustomQuery("g.V().drop()");
+                }
+                catch (ResponseException e) {
+                    logService.Log("Server probabbbly timed out. But that's expected, executing the drop query again!");
+                }
             } while (await CountDatabase() > 0);
         }
     }

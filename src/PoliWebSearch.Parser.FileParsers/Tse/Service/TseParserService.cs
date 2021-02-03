@@ -30,9 +30,10 @@ namespace PoliWebSearch.Parser.Tse.Service
         private readonly IFileService fileService;
         private readonly IClockService clockService;
         private readonly IDatabaseService databaseService;
+        private readonly IAdminService adminService;
 
         public TseParserService(ILogService logService, IConfiguratorService configurator, ITseCandidatesFileParser candidatesFileParser,
-            IFileService fileService, IClockService clockService, IDatabaseService databaseService)
+            IFileService fileService, IClockService clockService, IDatabaseService databaseService, IAdminService adminService)
         {
             this.logService = logService;
             this.configurator = configurator;
@@ -40,11 +41,16 @@ namespace PoliWebSearch.Parser.Tse.Service
             this.fileService = fileService;
             this.clockService = clockService;
             this.databaseService = databaseService;
+            this.adminService = adminService;
         }
 
-        public async Task<int> ParseFiles(TseDataSourceType dataSource, long? rowLimit)
+        public async Task<int> ParseFiles(TseDataSourceType dataSource, int rowLimit, bool dropFirst)
         {
             logService.Log("Starting to parse tse files");
+            if (dropFirst) {
+                logService.Log("Droping the database before inserting");
+                await adminService.DropDatabase();
+            }
             switch (dataSource) {
                 case TseDataSourceType.candidatos:
                     await ParseCandidates(rowLimit);
@@ -58,7 +64,7 @@ namespace PoliWebSearch.Parser.Tse.Service
             return 0;
         }
 
-        private async Task ParseCandidates(long? rowLimit)
+        private async Task ParseCandidates(int rowLimit)
         {
             string dirPath = Path.Join(configurator.AppConfig.StorageDirectory, "Tse", "Candidatos");
             if (!fileService.DirExists(dirPath)) return;
@@ -72,7 +78,7 @@ namespace PoliWebSearch.Parser.Tse.Service
             });
 
             if(rowLimit > 0) {
-                list = list.Take(10).ToList();
+                list = list.Take(rowLimit).ToList();
             }
 
 

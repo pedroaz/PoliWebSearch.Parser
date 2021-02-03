@@ -6,6 +6,6 @@ namespace PoliWebSearch.Parser.Tse.Service
 {
     public interface ITseParserService
     {
-        Task<int> ParseFiles(TseDataSourceType dataSource, long? rowLimit);
+        Task<int> ParseFiles(TseDataSourceType dataSource, int rowLimit, bool dropFirst);
     }
 }

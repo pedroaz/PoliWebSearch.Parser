@@ -8,5 +8,6 @@ namespace PoliWebSearch.Parser.Shared.Services.Log
     {
         void Initialize();
         void Log(string message);
+        void LogToConsole(string message);
     }
 }
