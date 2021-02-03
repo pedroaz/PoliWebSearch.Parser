@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PoliWebSearch.Parser.Shared.Models.Tse
 {
-    public class TseCandidateBelongsToPartyEdge
+    public class CandidateBelongsToPartyEdge : TseDataModel
     {
         
     }

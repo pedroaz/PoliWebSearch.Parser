@@ -93,7 +93,7 @@ namespace PoliWebSearch.Parser.Tse.Service
         private async Task InserPeopleVertices(List<TseCandidateFileModel> list)
         {
             var peopleList = list.Select(x =>
-                            new TseCandidatePersonVertice() {
+                            new PersonVertice() {
                                 CandidateName = x.CandidateName,
                                 Cpf = x.Cpf
                             }
@@ -105,13 +105,13 @@ namespace PoliWebSearch.Parser.Tse.Service
         private async Task InserPoliticalPartyVertices(List<TseCandidateFileModel> list)
         {
             var partyList = list.Select(x =>
-                            new TseCandidatePoliticalPartyVertice() {
-                                PolitcPartyAbbreviation = x.PolitcPartyAbbreviation,
-                                PolitcPartyName = x.PolitcPartyName
+                            new PoliticalPartyVertice() {
+                                PoliticalPartyAbbreviation = x.PolitcPartyAbbreviation,
+                                PoliticalPartyName = x.PolitcPartyName
                             }
                         ).ToList();
 
-            partyList = partyList.DistinctBy(x => x.PolitcPartyAbbreviation).ToList();
+            partyList = partyList.DistinctBy(x => x.PoliticalPartyAbbreviation).ToList();
 
             await databaseService.AddVertices(partyList, "political_party", "1");
         }
@@ -119,13 +119,13 @@ namespace PoliWebSearch.Parser.Tse.Service
         private async Task InsertBelongsToPartyEdges(List<TseCandidateFileModel> list)
         {
 
-            List<TseCandidateBelongsToPartyEdge> edgeProperties = new List<TseCandidateBelongsToPartyEdge>();
+            List<CandidateBelongsToPartyEdge> edgeProperties = new List<CandidateBelongsToPartyEdge>();
             List<VerticeFilter> fromFilters = new List<VerticeFilter>();
             List<VerticeFilter> toFilters = new List<VerticeFilter>();
 
             foreach (var item in list) {
 
-                edgeProperties.Add(new TseCandidateBelongsToPartyEdge());
+                edgeProperties.Add(new CandidateBelongsToPartyEdge());
                 fromFilters.Add(new VerticeFilter("Cpf", item.Cpf));
                 toFilters.Add(new VerticeFilter("PolitcPartyAbbreviation", item.PolitcPartyAbbreviation));
             }

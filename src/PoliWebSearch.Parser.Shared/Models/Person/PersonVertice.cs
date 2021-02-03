@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PoliWebSearch.Parser.Shared.Models.Tse
 {
-    public class TseCandidatePersonVertice : TseDataModel
+    public class PersonVertice : GeneralDataModel
     {
         public string CandidateName { get; set; }
         public string Cpf { get; set; }
