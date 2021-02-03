@@ -32,7 +32,7 @@ namespace PoliWebSerach.Parser.DB.Services
 
         public async Task DropDatabase()
         {
-            CountDatabase();
+            await CountDatabase();
             do {
                 await databaseService.ExecuteCustomQuery("g.V().drop()");
             } while (await CountDatabase() > 0);

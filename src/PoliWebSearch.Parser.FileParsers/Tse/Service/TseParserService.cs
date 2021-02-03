@@ -42,12 +42,12 @@ namespace PoliWebSearch.Parser.Tse.Service
             this.databaseService = databaseService;
         }
 
-        public async Task<int> ParseFiles(TseDataSourceType dataSource)
+        public async Task<int> ParseFiles(TseDataSourceType dataSource, long? rowLimit)
         {
             logService.Log("Starting to parse tse files");
             switch (dataSource) {
                 case TseDataSourceType.candidatos:
-                    await ParseCandidates();
+                    await ParseCandidates(rowLimit);
                     break;
                 case TseDataSourceType.resultados:
                     break;
@@ -58,7 +58,7 @@ namespace PoliWebSearch.Parser.Tse.Service
             return 0;
         }
 
-        private async Task ParseCandidates()
+        private async Task ParseCandidates(long? rowLimit)
         {
             string dirPath = Path.Join(configurator.AppConfig.StorageDirectory, "Tse", "Candidatos");
             if (!fileService.DirExists(dirPath)) return;
@@ -71,12 +71,13 @@ namespace PoliWebSearch.Parser.Tse.Service
                 }
             });
 
-            list = list.Take(500).ToList();
+            if(rowLimit > 0) {
+                list = list.Take(10).ToList();
+            }
+
 
             logService.Log($"Amount of records {list.Count}");
 
-
-            await databaseService.ExecuteCustomQueries("g.V().drop()");
             await InserPoliticalPartyVertices(list);
             await InserPeopleVertices(list);
             await InsertBelongsToPartyEdges(list);

@@ -69,7 +69,7 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
         private async Task<int> Execute(TseExecutionOptions options)
         {
             logService.Log($"Executing TSE Parser");
-            await tseParserService.ParseFiles(options.source);
+            await tseParserService.ParseFiles(options.source, options.rowlimit);
             return 0;
         }
     }
