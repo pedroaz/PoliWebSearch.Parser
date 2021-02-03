@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Dasync.Collections;
 using PoliWebSearch.Parser.Shared.Services.Log;
 using System.Linq;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace PoliWebSerach.Parser.DB.Operator
 {
@@ -101,6 +103,21 @@ namespace PoliWebSerach.Parser.DB.Operator
         public void AddCustomQuery(string customQuery)
         {
             queries.Add(customQuery);
+        }
+
+        public async Task<string> ExecuteCustomQuery(string query)
+        {
+            using var client = new GremlinClient(server, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType);
+            var resultSet = await client.SubmitAsync<dynamic>(query);
+            JArray array = new JArray();
+            foreach (var result in resultSet) {
+
+                string jsonObject = JsonConvert.SerializeObject(result, new JsonSerializerSettings() {
+                    Formatting = Formatting.Indented
+                });
+                array.Add(JsonConvert.DeserializeObject(jsonObject));
+            }
+            return array.ToString();
         }
     }
 }

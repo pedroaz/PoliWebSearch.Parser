@@ -1,8 +1,5 @@
 ﻿using CommandLine;
 using PoliWebSearch.Parser.Tse.Service;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PoliWebSearch.Parser.ConsoleApp.Commands.Options
 {

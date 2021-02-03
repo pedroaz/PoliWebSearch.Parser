@@ -2,6 +2,7 @@
 using PoliWebSearch.Parser.ConsoleApp.Commands.Options;
 using PoliWebSearch.Parser.Shared.Services.Log;
 using PoliWebSearch.Parser.Tse.Service;
+using PoliWebSerach.Parser.DB.Services;
 using System;
 using System.Threading.Tasks;
 
@@ -15,11 +16,14 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
         // Services
         private readonly ILogService logService;
         private readonly ITseParserService tseParserService;
+        private readonly IAdminService adminService;
 
-        public CommandsManager(ILogService logService, ITseParserService tseParserService)
+        public CommandsManager(ILogService logService, ITseParserService tseParserService,
+            IAdminService adminService)
         {
             this.logService = logService;
             this.tseParserService = tseParserService;
+            this.adminService = adminService;
         }
 
         public async Task Loop()
@@ -39,18 +43,33 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
 
                 // Actions
                 var splittedCommand = currentCommand.Split(" ");
-                var result = await CommandLine.Parser.Default.ParseArguments<TseExecutionOptions, PdtExecutionOptions>(splittedCommand)
+                var result = await CommandLine.Parser.Default.ParseArguments<TseExecutionOptions, PdtExecutionOptions, AdminExecutionOptions>(splittedCommand)
                     .MapResult(
-                        (TseExecutionOptions opts) => ExecuteTse(opts),
+                        (TseExecutionOptions options) => Execute(options),
+                        (AdminExecutionOptions options) => Execute(options),
                         _ => Task.FromResult(1)
                     );
             }
         }
 
-        private async Task<int> ExecuteTse(TseExecutionOptions opts)
+        private async Task<int> Execute(AdminExecutionOptions options)
+        {
+            logService.Log($"Executing Admin Operation: {options.operation}");
+            switch (options.operation) {
+                case AdminOperations.count:
+                    await adminService.CountDatabase();
+                    break;
+                case AdminOperations.drop:
+                    await adminService.DropDatabase();
+                    break;
+            }
+            return 0;
+        }
+
+        private async Task<int> Execute(TseExecutionOptions options)
         {
             logService.Log($"Executing TSE Parser");
-            await tseParserService.ParseFiles(opts.source);
+            await tseParserService.ParseFiles(options.source);
             return 0;
         }
     }

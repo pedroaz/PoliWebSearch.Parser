@@ -14,5 +14,6 @@ namespace PoliWebSerach.Parser.DB.Operator
         void AddEdgeQuery(dynamic edgeObj, string edgeLabel, VerticeFilter fromVerticeFilter, VerticeFilter toVerticeFilter);
         Task ExecuteOperations();
         Task GetVertices(VerticeFilter filter);
+        Task<string> ExecuteCustomQuery(string query);
     }
 }

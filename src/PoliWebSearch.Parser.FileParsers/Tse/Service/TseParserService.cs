@@ -76,7 +76,7 @@ namespace PoliWebSearch.Parser.Tse.Service
             logService.Log($"Amount of records {list.Count}");
 
 
-            await databaseService.ExecuteCustomQuery("g.V().drop()");
+            await databaseService.ExecuteCustomQueries("g.V().drop()");
             await InserPoliticalPartyVertices(list);
             await InserPeopleVertices(list);
             await InsertBelongsToPartyEdges(list);

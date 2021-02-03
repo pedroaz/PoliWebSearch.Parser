@@ -77,6 +77,7 @@ namespace PoliWebSearch.Parser.ConsoleApp
             builder.RegisterType<DatabaseService>().As<IDatabaseService>().SingleInstance();
             builder.RegisterType<DatabaseOperator>().As<IDatabaseOperator>();
             builder.RegisterType<ServiceResolver>().As<IServiceResolver>().SingleInstance();
+            builder.RegisterType<AdminService>().As<IAdminService>().SingleInstance();
             container = builder.Build();
         }
 
