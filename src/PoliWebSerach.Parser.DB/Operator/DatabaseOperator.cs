@@ -24,7 +24,7 @@ namespace PoliWebSerach.Parser.DB.Operator
         private List<string> failedQueries = new List<string>();
         private int failureAtempt = 0;
         private object failureLock = new object();
-        private int internalLogCounter = 0;
+        private float internalLogCounter = 0;
 
         public DatabaseOperator(ILogService logService)
         {
@@ -104,9 +104,7 @@ namespace PoliWebSerach.Parser.DB.Operator
         private void InternalLogToConsole()
         {
             internalLogCounter++;
-            var number = (internalLogCounter / (float)queries.Count);
-            var sformatted = string.Format("{0:0.##\\%}", number);
-            logService.LogToConsole($"\rPercentage of Execution ({internalLogCounter}/{queries.Count}): {sformatted}");
+            logService.LogToConsole($"\rPercentage of Execution ({internalLogCounter}/{queries.Count}): {string.Format("{0:P2}.", (internalLogCounter / queries.Count))}");
         }
 
         private void AddPropertiesToQuery(dynamic obj, StringBuilder stringBuilder)
@@ -124,7 +122,7 @@ namespace PoliWebSerach.Parser.DB.Operator
                 }
                 else {
                     // Do not insert empty properties
-                    if (propertyValue == "") continue;
+                    if (propertyValue == string.Empty) continue;
                     stringBuilder.Append($@".property('{propertyName}', '{propertyValue}')");
                 }
             }
