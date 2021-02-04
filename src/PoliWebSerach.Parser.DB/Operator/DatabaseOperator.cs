@@ -116,8 +116,6 @@ namespace PoliWebSerach.Parser.DB.Operator
                 var propertyName = property.Name;
                 var propertyValue = property.GetValue(obj);
 
-                
-
                 // As we are setting on the model that this is a list, we should add it to the graph as a list too
                 if (property.PropertyType.Name == "List`1") {
                     foreach (var item in propertyValue) {

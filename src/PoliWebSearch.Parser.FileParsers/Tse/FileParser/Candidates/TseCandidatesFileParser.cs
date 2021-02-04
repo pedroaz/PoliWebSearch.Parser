@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates
 {
@@ -29,7 +30,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates
             };
 
             try {
-                using (var reader = new StreamReader(filePath))
+                using (var reader = new StreamReader(filePath, Encoding.GetEncoding("iso-8859-1")))
                 using (var csv = new CsvReader(reader, csvConfig)) {
                     csv.Context.RegisterClassMap<TseCandidateModelMapping>();
                     list = csv.GetRecords<TseCandidateFileModel>().ToList();

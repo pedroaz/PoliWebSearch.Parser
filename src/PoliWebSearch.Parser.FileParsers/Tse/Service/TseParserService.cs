@@ -96,7 +96,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
         {
             var peopleList = list.Select(x =>
                             new PersonVertice() {
-                                Names = new List<string>(){ x.CandidateName },
+                                Names = new List<string>(){ x.CandidateName, x.SocialCandidateName, x.CandidateNameOnCedule },
                                 Cpf = x.Cpf
                             }
                         ).ToList();
