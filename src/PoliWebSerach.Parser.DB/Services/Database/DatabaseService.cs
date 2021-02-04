@@ -68,7 +68,7 @@ namespace PoliWebSerach.Parser.DB.Services.Database
             });
         }
 
-        public async Task ExecuteCustomQueries(string query)
+        public async Task ExecuteCustomQuery(string query)
         {
             var databaseOperator = serviceResolver.ResolveService<IDatabaseOperator>().Initialize(server);
             databaseOperator.AddCustomQuery(query);
@@ -78,7 +78,7 @@ namespace PoliWebSerach.Parser.DB.Services.Database
 
         }
 
-        public async Task<string> ExecuteCustomQuery(string query)
+        public async Task<string> ExecuteCustomQueryWithReturnValue(string query)
         {
             var databaseOperator = serviceResolver.ResolveService<IDatabaseOperator>().Initialize(server);
             return await databaseOperator.ExecuteCustomQuery(query);

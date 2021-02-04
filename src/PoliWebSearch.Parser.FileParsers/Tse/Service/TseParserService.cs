@@ -61,8 +61,6 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
                     break;
             }
 
-
-
             return 0;
         }
 
@@ -83,13 +81,11 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
                 list = list.Take(rowLimit).ToList();
             }
 
-
             logService.Log($"Amount of records {list.Count}");
-            
             await InserPeopleVertices(list);
             await InserPoliticalPartyVertices(list);
-            await InsertBelongsToPartyEdges(list);
-
+            await RemoveTseLabels();
+            await InsertTseBelongsToPartyEdges(list);
         }
 
         private async Task InserPeopleVertices(List<TseCandidateFileModel> list)
@@ -118,21 +114,27 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
             await databaseService.AddVertices(partyList, "political_party", "1", "PoliticalPartyAbbreviation");
         }
 
-        private async Task InsertBelongsToPartyEdges(List<TseCandidateFileModel> list)
+
+        private async Task RemoveTseLabels()
+        {
+            await databaseService.ExecuteCustomQuery($"g.E().hasLabel('{TseCandidateBelongsToPartyEdge.LabelName}').drop()");
+        }
+
+        private async Task InsertTseBelongsToPartyEdges(List<TseCandidateFileModel> list)
         {
 
-            List<CandidateBelongsToPartyEdge> edgeProperties = new List<CandidateBelongsToPartyEdge>();
+            List<TseCandidateBelongsToPartyEdge> edgeProperties = new List<TseCandidateBelongsToPartyEdge>();
             List<VerticeFilter> fromFilters = new List<VerticeFilter>();
             List<VerticeFilter> toFilters = new List<VerticeFilter>();
 
             foreach (var item in list) {
 
-                edgeProperties.Add(new CandidateBelongsToPartyEdge());
+                edgeProperties.Add(new TseCandidateBelongsToPartyEdge());
                 fromFilters.Add(new VerticeFilter("Cpf", item.Cpf));
                 toFilters.Add(new VerticeFilter("PolitcPartyAbbreviation", item.PolitcPartyAbbreviation));
             }
 
-            await databaseService.AddEdges(edgeProperties, "belongs_to_party", fromFilters, toFilters);
+            await databaseService.AddEdges(edgeProperties, TseCandidateBelongsToPartyEdge.LabelName, fromFilters, toFilters);
         }
 
     }

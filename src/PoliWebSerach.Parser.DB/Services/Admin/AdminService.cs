@@ -27,7 +27,7 @@ namespace PoliWebSerach.Parser.DB.Services.Admin
 
         public async Task<long> CountDatabase()
         {
-            var result = JsonConvert.DeserializeObject<List<dynamic>>(await databaseService.ExecuteCustomQuery("g.V().count()"));
+            var result = JsonConvert.DeserializeObject<List<dynamic>>(await databaseService.ExecuteCustomQueryWithReturnValue("g.V().count()"));
             logService.Log($"Current count of the database: {result.First()}");
             return result.First();
         }
@@ -41,7 +41,7 @@ namespace PoliWebSerach.Parser.DB.Services.Admin
             do {
                 logService.Log("Executing the drop query");
                 try {
-                    await databaseService.ExecuteCustomQuery("g.V().drop()");
+                    await databaseService.ExecuteCustomQueryWithReturnValue("g.V().drop()");
                 }
                 catch (ResponseException) {
                     logService.Log("Server probabbbly timed out. But that's expected, executing the drop query again!");
