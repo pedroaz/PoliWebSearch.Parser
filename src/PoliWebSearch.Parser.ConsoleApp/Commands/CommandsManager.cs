@@ -32,16 +32,20 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
 
                 logService.Log($"Please type a new command. Or type --help if you don't know what you are doing");
 
-                // Read
                 currentCommand = Console.ReadLine();
                 logService.Log($"Command recieved: {currentCommand}");
 
-                // Exit
                 if (currentCommand == "exit") {
                     break;
                 }
 
-                // Actions
+                //await Execute(new TseExecutionOptions() {
+                //    dropfirst = false,
+                //    rowlimit = 10,
+                //    source = TseDataSourceType.candidatos
+                //});
+                //break;
+                
                 var splittedCommand = currentCommand.Split(" ");
                 var result = await CommandLine.Parser.Default.ParseArguments<TseExecutionOptions, PdtExecutionOptions, AdminExecutionOptions>(splittedCommand)
                     .MapResult(

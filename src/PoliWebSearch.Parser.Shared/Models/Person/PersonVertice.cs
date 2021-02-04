@@ -1,8 +1,10 @@
-﻿namespace PoliWebSearch.Parser.Shared.Models.Person
+﻿using System.Collections.Generic;
+
+namespace PoliWebSearch.Parser.Shared.Models.Person
 {
     public class PersonVertice : GeneralDataModel
     {
-        public string CandidateName { get; set; }
+        public List<string> Names { get; set; }
         public string Cpf { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using PoliWebSearch.Parser.Shared.Configurator;
 using PoliWebSearch.Parser.Shared.Resolver;
 using PoliWebSearch.Parser.Shared.Services.Clock;
 using PoliWebSerach.Parser.DB.Operator;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -28,15 +29,28 @@ namespace PoliWebSerach.Parser.DB.Services.Database
             server = new GremlinServer(configuratorService.AppConfig.HostName, 443, true, userName, configuratorService.AppConfig.MasterKey);
         }
 
-        public async Task AddVertices<T>(List<T> list, string label, string partitionKey)
+        public async Task AddVertices<T>(List<T> list, string label, string partitionKey, string filterName)
         {
             var databaseOperator = serviceResolver.ResolveService<IDatabaseOperator>().Initialize(server);
-            foreach (var item in list) {
-                databaseOperator.AddVerticeQuery(item, partitionKey, label);
+
+            foreach (var obj in list) {
+                databaseOperator.AddUpsertVerticeQuery(obj, partitionKey, label, GetVerticeFilter(obj, filterName));
             }
+
             await clockService.ExecuteWithStopWatchAsync("Executing AddVertices batch operations on database", async () => {
                 await databaseOperator.ExecuteOperations();
             });
+        }
+
+        private VerticeFilter GetVerticeFilter(object obj, string filterName)
+        {
+            foreach (var property in obj.GetType().GetProperties()) {
+                if (property.Name == filterName) {
+                    return new VerticeFilter(filterName, property.GetValue(obj).ToString());
+                }
+            }
+            // This should never happen
+            throw new Exception("Wrong filter name given on a insert");
         }
 
         public async Task AddEdges<T>(List<T> list, string label, List<VerticeFilter> fromFilters, List<VerticeFilter> toFilters)

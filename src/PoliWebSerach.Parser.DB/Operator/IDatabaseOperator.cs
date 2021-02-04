@@ -12,5 +12,6 @@ namespace PoliWebSerach.Parser.DB.Operator
         Task ExecuteOperations();
         Task GetVertices(VerticeFilter filter);
         Task<string> ExecuteCustomQuery(string query);
+        void AddUpsertVerticeQuery(dynamic verticeObj, string partitionKey, string label, VerticeFilter filter);
     }
 }

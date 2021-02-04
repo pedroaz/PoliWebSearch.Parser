@@ -44,6 +44,14 @@ namespace PoliWebSerach.Parser.DB.Operator
             queries.Add(stringBuilder.ToString());
         }
 
+        public void AddUpsertVerticeQuery(dynamic verticeObj, string partitionKey, string label, VerticeFilter filter)
+        {
+            // This will only insert the vertice if it wasn't found (using the filder)
+            StringBuilder stringBuilder = new StringBuilder($@"g.V().has('{label}', '{filter.PropertyName}', '{filter.PropertyValue}').fold().coalesce(unfold(), addV('{label}').property('pk', '{partitionKey}'))");
+            AddPropertiesToQuery(verticeObj, stringBuilder);
+            queries.Add(stringBuilder.ToString());
+        }
+
         public void AddEdgeQuery(dynamic edgeObj, string edgeLabel, VerticeFilter fromVerticeFilter, VerticeFilter toVerticeFilter)
         {
             StringBuilder stringBuilder = new StringBuilder($@"g.V().has('{fromVerticeFilter.PropertyName}', '{fromVerticeFilter.PropertyValue}')");
@@ -104,9 +112,23 @@ namespace PoliWebSerach.Parser.DB.Operator
         private void AddPropertiesToQuery(dynamic obj, StringBuilder stringBuilder)
         {
             foreach (var property in obj.GetType().GetProperties()) {
+
                 var propertyName = property.Name;
                 var propertyValue = property.GetValue(obj);
-                stringBuilder.Append($@".property('{propertyName}', '{propertyValue}')");
+
+                
+
+                // As we are setting on the model that this is a list, we should add it to the graph as a list too
+                if (property.PropertyType.Name == "List`1") {
+                    foreach (var item in propertyValue) {
+                        stringBuilder.Append($@".property(list, '{propertyName}', '{item}')");
+                    }
+                }
+                else {
+                    // Do not insert empty properties
+                    if (propertyValue == "") continue;
+                    stringBuilder.Append($@".property('{propertyName}', '{propertyValue}')");
+                }
             }
         }
 
@@ -129,5 +151,7 @@ namespace PoliWebSerach.Parser.DB.Operator
             }
             return array.ToString();
         }
+
+        
     }
 }

@@ -85,9 +85,9 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
 
 
             logService.Log($"Amount of records {list.Count}");
-
-            await InserPoliticalPartyVertices(list);
+            
             await InserPeopleVertices(list);
+            await InserPoliticalPartyVertices(list);
             await InsertBelongsToPartyEdges(list);
 
         }
@@ -96,12 +96,12 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
         {
             var peopleList = list.Select(x =>
                             new PersonVertice() {
-                                CandidateName = x.CandidateName,
+                                Names = new List<string>(){ x.CandidateName },
                                 Cpf = x.Cpf
                             }
                         ).ToList();
 
-            await databaseService.AddVertices(peopleList, "person", "1");
+            await databaseService.AddVertices(peopleList, "person", "1", "Cpf");
         }
 
         private async Task InserPoliticalPartyVertices(List<TseCandidateFileModel> list)
@@ -115,7 +115,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
 
             partyList = partyList.DistinctBy(x => x.PoliticalPartyAbbreviation).ToList();
 
-            await databaseService.AddVertices(partyList, "political_party", "1");
+            await databaseService.AddVertices(partyList, "political_party", "1", "PoliticalPartyAbbreviation");
         }
 
         private async Task InsertBelongsToPartyEdges(List<TseCandidateFileModel> list)
