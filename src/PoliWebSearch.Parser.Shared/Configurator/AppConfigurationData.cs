@@ -8,5 +8,6 @@
         public string GraphName { get; set; }
         public string HostName { get; set; }
         public string MasterKey { get; set; }
+        public string LogDirectory { get; set; }
     }
 }

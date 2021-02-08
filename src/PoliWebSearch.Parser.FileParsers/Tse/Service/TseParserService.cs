@@ -90,6 +90,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
 
         private async Task InserPeopleVertices(List<TseCandidateFileModel> list)
         {
+            logService.Log("Inserting People Vertices");
             var peopleList = list.Select(x =>
                             new PersonVertice() {
                                 Names = new List<string>(){ x.CandidateName, x.SocialCandidateName, x.CandidateNameOnCedule },
@@ -102,6 +103,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
 
         private async Task InserPoliticalPartyVertices(List<TseCandidateFileModel> list)
         {
+            logService.Log("Inserting Political Party Vertices");
             var partyList = list.Select(x =>
                             new PoliticalPartyVertice() {
                                 PoliticalPartyAbbreviation = x.PolitcPartyAbbreviation,
@@ -117,12 +119,14 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
 
         private async Task RemoveTseLabels()
         {
+            logService.Log($"Removing {TseCandidateBelongsToPartyEdge.LabelName} label");
             await databaseService.ExecuteCustomQuery($"g.E().hasLabel('{TseCandidateBelongsToPartyEdge.LabelName}').drop()");
         }
 
         private async Task InsertTseBelongsToPartyEdges(List<TseCandidateFileModel> list)
         {
 
+            logService.Log($"Inserting {TseCandidateBelongsToPartyEdge.LabelName} label");
             List<TseCandidateBelongsToPartyEdge> edgeProperties = new List<TseCandidateBelongsToPartyEdge>();
             List<VerticeFilter> fromFilters = new List<VerticeFilter>();
             List<VerticeFilter> toFilters = new List<VerticeFilter>();

@@ -23,8 +23,6 @@ namespace PoliWebSearch.Parser.ConsoleApp
         private static ICommandsManager commandsManager;
         private static IConfiguratorService configuratorService;
 
-        static void print(string message) => Console.WriteLine(message);
-
         static void Main(string[] args)
         {
 
@@ -39,20 +37,19 @@ namespace PoliWebSearch.Parser.ConsoleApp
 
         private async static Task MainAsync(string[] args)
         {
-            print("*** Starting Poli Web Search ***");
-            print("*** Initializing intefaces ***");
+            LogService.Print("*** Starting Poli Web Search ***");
+            LogService.Print("*** Initializing intefaces ***");
             RegisterInterfaces();
             string envPath = GetEnvPathFromArgs(args);
             if (envPath.Equals(string.Empty)) {
-                print("*** Need to pass env folder for the app to execute ***");
+                LogService.Print("*** Need to pass env folder for the app to execute ***");
                 return;
             }
 
             ResolveInterfaces();
             InitializeIntefaces(envPath);
-            print("*** Interfaces initialized correctly. Starting command loop ***");
             await commandsManager.Loop();
-            print("*** Finished console app ***");
+            LogService.Print("*** Finished console app ***");
         }
 
         private static string GetEnvPathFromArgs(string[] args)
@@ -91,10 +88,12 @@ namespace PoliWebSearch.Parser.ConsoleApp
 
         private static void InitializeIntefaces(string envPath)
         {
-            logService.Initialize();
-            container.Resolve<IServiceResolver>().Initialize(container);
             configuratorService.Initialize(envPath);
+            logService.Initialize();
+            logService.Log("Log service and configurator initialized correctly", LogType.Initialization);
+            container.Resolve<IServiceResolver>().Initialize(container);
             container.Resolve<IDatabaseService>().Initialize();
+            logService.Log("Other interfaces initialized correctly", LogType.Initialization);
         }
 
     }

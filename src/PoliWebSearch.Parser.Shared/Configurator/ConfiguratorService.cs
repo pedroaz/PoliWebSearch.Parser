@@ -15,6 +15,7 @@ namespace PoliWebSearch.Parser.Shared.Configurator
             appConfiguration = JsonConvert.DeserializeObject<AppConfigurationData>(File.ReadAllText(Path.Combine(envDir, "appConfig.json")));
             appConfiguration.EnvDirectory = envDir;
             appConfiguration.StorageDirectory = Path.Join(envDir, "storage");
+            appConfiguration.LogDirectory = Path.Join(envDir, "log");
         }
     }
 }

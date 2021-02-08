@@ -30,21 +30,14 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
         {
             while (true) {
 
-                logService.Log($"Please type a new command. Or type --help if you don't know what you are doing");
+                logService.Log($"Please type a new command. Or type --help if you don't know what you are doing", LogType.Loop);
 
                 currentCommand = Console.ReadLine();
-                logService.Log($"Command recieved: {currentCommand}");
+                logService.Log($"Command recieved: {currentCommand}", LogType.Loop);
 
                 if (currentCommand == "exit") {
                     break;
                 }
-
-                //await Execute(new TseExecutionOptions() {
-                //    dropfirst = false,
-                //    rowlimit = 10,
-                //    source = TseDataSourceType.candidatos
-                //});
-                //break;
                 
                 var splittedCommand = currentCommand.Split(" ");
                 var result = await CommandLine.Parser.Default.ParseArguments<TseExecutionOptions, PdtExecutionOptions, AdminExecutionOptions>(splittedCommand)
@@ -58,7 +51,7 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
 
         private async Task<int> Execute(AdminExecutionOptions options)
         {
-            logService.Log($"Executing Admin Operation: {options.operation}");
+            logService.Log($"Executing Admin Operation: {options.operation}", LogType.Loop);
             switch (options.operation) {
                 case AdminOperations.count:
                     await adminService.CountDatabase();
@@ -72,7 +65,7 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
 
         private async Task<int> Execute(TseExecutionOptions options)
         {
-            logService.Log($"Executing TSE Parser");
+            logService.Log($"Executing TSE Parser", LogType.Loop);
             await tseParserService.ParseFiles(options.source, options.rowlimit, options.dropfirst);
             return 0;
         }
