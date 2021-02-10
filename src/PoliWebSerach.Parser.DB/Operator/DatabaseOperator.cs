@@ -12,18 +12,42 @@ using System.Threading.Tasks;
 
 namespace PoliWebSerach.Parser.DB.Operator
 {
+    /// <summary>
+    /// Implementation of IDatabaseOperator
+    /// </summary>
     public class DatabaseOperator : IDatabaseOperator
     {
-
+        // Services
         private readonly ILogService logService;
-
-        public string operationGUID = Guid.NewGuid().ToString();
         private GremlinServer server;
+
+        /// <summary>
+        /// Query list where queries can be stores and later executed 
+        /// </summary>
         private List<string> queries = new List<string>();
 
+        /// <summary>
+        /// Internal list of failed queries which will be executed multiple times 
+        /// </summary>
         private List<string> failedQueries = new List<string>();
+        /// <summary>
+        /// Internal amount of times the operator already tired to execute the failed queries
+        /// </summary>
         private int failureAtempt = 0;
+
+        /// <summary>
+        /// Times the operator should try to execute the queries
+        /// </summary>
+        private const int maxAmountOfFailedAttempts = 6;
+
+        /// <summary>
+        /// Internal lock used to add failed queries
+        /// </summary>
         private object failureLock = new object();
+
+        /// <summary>
+        /// Internal log used to log to console
+        /// </summary>
         private float internalLogCounter = 0;
 
         public DatabaseOperator(ILogService logService)
@@ -31,12 +55,14 @@ namespace PoliWebSerach.Parser.DB.Operator
             this.logService = logService;
         }
 
+        // <inheritdoc/>
         public IDatabaseOperator Initialize(GremlinServer server)
         {
             this.server = server;
             return this;
         }
 
+        // <inheritdoc/>
         public void AddVerticeQuery(dynamic verticeObj, string partitionKey, string label)
         {
             StringBuilder stringBuilder = new StringBuilder($@"g.addV('{label}').property('pk', '{partitionKey}')");
@@ -44,6 +70,7 @@ namespace PoliWebSerach.Parser.DB.Operator
             queries.Add(stringBuilder.ToString());
         }
 
+        // <inheritdoc/>
         public void AddUpsertVerticeQuery(dynamic verticeObj, string partitionKey, string label, VerticeFilter filter)
         {
             // This will only insert the vertice if it wasn't found (using the filder)
@@ -52,6 +79,7 @@ namespace PoliWebSerach.Parser.DB.Operator
             queries.Add(stringBuilder.ToString());
         }
 
+        // <inheritdoc/>
         public void AddEdgeQuery(dynamic edgeObj, string edgeLabel, VerticeFilter fromVerticeFilter, VerticeFilter toVerticeFilter)
         {
             StringBuilder stringBuilder = new StringBuilder($@"g.V().has('{fromVerticeFilter.PropertyName}', '{fromVerticeFilter.PropertyValue}')");
@@ -61,18 +89,20 @@ namespace PoliWebSerach.Parser.DB.Operator
             queries.Add(stringBuilder.ToString());
         }
 
-        public Task GetVertices(VerticeFilter filter)
+        // <inheritdoc/>
+        public Task<string> GetVertices(VerticeFilter filter)
         {
             throw new NotImplementedException();
         }
 
+        // <inheritdoc/>
         public async Task ExecuteOperations()
         {
             using var client = new GremlinClient(server, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType);
 
             await ExecuteQueryList(client);
 
-            while (failureAtempt < 6 && failedQueries.Any()) {
+            while (failureAtempt < maxAmountOfFailedAttempts && failedQueries.Any()) {
                 logService.Log($"Oh no, we are retrying {failedQueries.Count} because they failed. Retry count: {failureAtempt}");
                 queries = failedQueries;
                 failedQueries = new List<string>();
@@ -81,6 +111,11 @@ namespace PoliWebSerach.Parser.DB.Operator
             }
         }
 
+        /// <summary>
+        /// Execute all queries from the query list
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
         private async Task ExecuteQueryList(GremlinClient client)
         {
             logService.Log($"Executing {queries.Count} queries");
@@ -101,12 +136,20 @@ namespace PoliWebSerach.Parser.DB.Operator
             }, maxDegreeOfParallelism: 10);
         }
 
+        /// <summary>
+        /// Log the progress to console
+        /// </summary>
         private void InternalLogToConsole()
         {
             internalLogCounter++;
             logService.LogToConsole($"\rPercentage of Execution ({internalLogCounter}/{queries.Count}): {string.Format("{0:P2}.", (internalLogCounter / queries.Count))}");
         }
 
+        /// <summary>
+        /// Add the properties to a query using reflection to get public properties from the object
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="stringBuilder"></param>
         private void AddPropertiesToQuery(dynamic obj, StringBuilder stringBuilder)
         {
             foreach (var property in obj.GetType().GetProperties()) {
@@ -128,11 +171,13 @@ namespace PoliWebSerach.Parser.DB.Operator
             }
         }
 
+        // <inheritdoc/>
         public void AddCustomQuery(string customQuery)
         {
             queries.Add(customQuery);
         }
 
+        // <inheritdoc/>
         public async Task<string> ExecuteCustomQuery(string query)
         {
             using var client = new GremlinClient(server, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType);
@@ -147,7 +192,5 @@ namespace PoliWebSerach.Parser.DB.Operator
             }
             return array.ToString();
         }
-
-        
     }
 }

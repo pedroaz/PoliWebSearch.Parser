@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace PoliWebSerach.Parser.DB.Services.Database
 {
+    /// <summary>
+    /// Implementation of IDatabaseService
+    /// </summary>
     public class DatabaseService : IDatabaseService
     {
         private GremlinServer server;
@@ -23,17 +26,19 @@ namespace PoliWebSerach.Parser.DB.Services.Database
             this.clockService = clockService;
         }
 
+        // <inheritdoc/>
         public void Initialize()
         {
             var userName = $"/dbs/{configuratorService.AppConfig.DatabaseName}/colls/{configuratorService.AppConfig.GraphName}";
             server = new GremlinServer(configuratorService.AppConfig.HostName, 443, true, userName, configuratorService.AppConfig.MasterKey);
         }
 
-        public async Task AddVertices<T>(List<T> list, string label, string partitionKey, string filterName)
+        // <inheritdoc/>
+        public async Task AddVertices<T>(List<T> listOfObjects, string label, string partitionKey, string filterName)
         {
             var databaseOperator = serviceResolver.ResolveService<IDatabaseOperator>().Initialize(server);
 
-            foreach (var obj in list) {
+            foreach (var obj in listOfObjects) {
                 databaseOperator.AddUpsertVerticeQuery(obj, partitionKey, label, GetVerticeFilter(obj, filterName));
             }
 
@@ -42,6 +47,12 @@ namespace PoliWebSerach.Parser.DB.Services.Database
             });
         }
 
+        /// <summary>
+        /// Create the vertice filter by using the filter name and reading the value using reflection
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="filterName"></param>
+        /// <returns></returns>
         private VerticeFilter GetVerticeFilter(object obj, string filterName)
         {
             foreach (var property in obj.GetType().GetProperties()) {
@@ -49,10 +60,11 @@ namespace PoliWebSerach.Parser.DB.Services.Database
                     return new VerticeFilter(filterName, property.GetValue(obj).ToString());
                 }
             }
-            // This should never happen
+            // This should never happen - You should not pass a filter name which the object does not contain
             throw new Exception("Wrong filter name given on a insert");
         }
 
+        // <inheritdoc/>
         public async Task AddEdges<T>(List<T> list, string label, List<VerticeFilter> fromFilters, List<VerticeFilter> toFilters)
         {
             var databaseOperator = serviceResolver.ResolveService<IDatabaseOperator>().Initialize(server);
@@ -68,6 +80,7 @@ namespace PoliWebSerach.Parser.DB.Services.Database
             });
         }
 
+        // <inheritdoc/>
         public async Task ExecuteCustomQuery(string query)
         {
             var databaseOperator = serviceResolver.ResolveService<IDatabaseOperator>().Initialize(server);
@@ -78,6 +91,7 @@ namespace PoliWebSerach.Parser.DB.Services.Database
 
         }
 
+        // <inheritdoc/>
         public async Task<string> ExecuteCustomQueryWithReturnValue(string query)
         {
             var databaseOperator = serviceResolver.ResolveService<IDatabaseOperator>().Initialize(server);

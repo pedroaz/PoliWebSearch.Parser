@@ -3,12 +3,16 @@ using System.IO;
 
 namespace PoliWebSearch.Parser.Shared.Configurator
 {
+    /// <summary>
+    /// Implementation of IConfigurationService
+    /// </summary>
     public class ConfiguratorService : IConfiguratorService
     {
         private AppConfigurationData appConfiguration;
 
         public AppConfigurationData AppConfig => appConfiguration;
 
+        // <inheritdoc/>
         public void Initialize(string envDir)
         {
             appConfiguration = new AppConfigurationData();

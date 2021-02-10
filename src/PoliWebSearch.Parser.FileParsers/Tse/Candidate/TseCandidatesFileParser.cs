@@ -9,8 +9,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates
+namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
 {
+    /// <summary>
+    /// Implementation of ITseCandidatesFileParser
+    /// </summary>
     public class TseCandidatesFileParser : ITseCandidatesFileParser
     {
         private readonly ILogService logService;
@@ -20,7 +23,8 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates
             this.logService = logService;
         }
 
-        public List<TseCandidateFileModel> ParseFile(string filePath)
+        // <inheritdoc/>
+        public List<TseCandidateFileModel> ParseCandidateFile(string filePath)
         {
             List<TseCandidateFileModel> list = new List<TseCandidateFileModel>();
 

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace PoliWebSearch.Parser.Shared.Services.Clock
 {
+    /// <summary>
+    /// Implementation of IClockService
+    /// </summary>
     public class ClockService : IClockService
     {
         private readonly ILogService logService;
@@ -14,6 +17,7 @@ namespace PoliWebSearch.Parser.Shared.Services.Clock
             this.logService = logService;
         }
 
+        // <inheritdoc/>
         public void ExecuteWithStopWatch(string actionName, Action action)
         {
             logService.Log($"Starting to execute: {actionName}");
@@ -25,6 +29,7 @@ namespace PoliWebSearch.Parser.Shared.Services.Clock
             logService.Log($"Amount of time elasped for the parse: {elapsedTimeSpan}");
         }
 
+        // <inheritdoc/>
         public async Task ExecuteWithStopWatchAsync(string actionName, Func<Task> asyncTask)
         {
             logService.Log($"Starting to execute: {actionName}");

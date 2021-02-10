@@ -1,5 +1,4 @@
-﻿using MoreLinq.Extensions;
-using PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates;
+﻿using MoreLinq;
 using PoliWebSearch.Parser.Shared.Configurator;
 using PoliWebSearch.Parser.Shared.Models.Edges;
 using PoliWebSearch.Parser.Shared.Models.Person;
@@ -16,15 +15,12 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PoliWebSearch.Parser.FileParsers.Tse.Service
+namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
 {
-    public enum TseDataSourceType
-    {
-        candidatos,
-        resultados
-    }
-
-    public class TseParserService : ITseParserService
+    /// <summary>
+    /// Implementation of ITseCandidateParser
+    /// </summary>
+    public class TseCandidateParser : ITseCandidateParser
     {
         private readonly ILogService logService;
         private readonly IConfiguratorService configurator;
@@ -34,7 +30,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
         private readonly IDatabaseService databaseService;
         private readonly IAdminService adminService;
 
-        public TseParserService(ILogService logService, IConfiguratorService configurator, ITseCandidatesFileParser candidatesFileParser,
+        public TseCandidateParser(ILogService logService, IConfiguratorService configurator, ITseCandidatesFileParser candidatesFileParser,
             IFileService fileService, IClockService clockService, IDatabaseService databaseService, IAdminService adminService)
         {
             this.logService = logService;
@@ -46,26 +42,14 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
             this.adminService = adminService;
         }
 
-        public async Task<int> ParseFiles(TseDataSourceType dataSource, int rowLimit, bool dropFirst)
+        /// <summary>
+        /// Parse all candidate files and insert into the database
+        /// </summary>
+        /// <param name="rowLimit"></param>
+        /// <returns></returns>
+        public async Task ParseCandidates(int rowLimit)
         {
-            logService.Log("Starting to parse tse files");
-            if (dropFirst) {
-                logService.Log("Droping the database before inserting");
-                await adminService.DropDatabase();
-            }
-            switch (dataSource) {
-                case TseDataSourceType.candidatos:
-                    await ParseCandidates(rowLimit);
-                    break;
-                case TseDataSourceType.resultados:
-                    break;
-            }
-
-            return 0;
-        }
-
-        private async Task ParseCandidates(int rowLimit)
-        {
+            // Parse files
             string dirPath = Path.Join(configurator.AppConfig.StorageDirectory, "Tse", "Candidatos");
             if (!fileService.DirExists(dirPath)) return;
             var files = fileService.GetFilesFromDir(dirPath);
@@ -73,14 +57,25 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
             clockService.ExecuteWithStopWatch("Parsing TSE Candidates", () => {
                 foreach (var file in files) {
                     logService.Log($"Parsing File: {file}");
-                    list.AddRange(candidatesFileParser.ParseFile(file));
+                    list.AddRange(candidatesFileParser.ParseCandidateFile(file));
                 }
             });
 
+            // Remove rows if needed
             if (rowLimit > 0) {
                 list = list.Take(rowLimit).ToList();
             }
 
+            await InsertDataIntoDatabase(list);
+        }
+
+        /// <summary>
+        /// Insert all candidates data into the database
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        private async Task InsertDataIntoDatabase(List<TseCandidateFileModel> list)
+        {
             logService.Log($"Amount of records {list.Count}");
             await InserPeopleVertices(list);
             await InserPoliticalPartyVertices(list);
@@ -88,12 +83,17 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
             await InsertTseBelongsToPartyEdges(list);
         }
 
+        /// <summary>
+        /// Insert all people vertices into the database
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
         private async Task InserPeopleVertices(List<TseCandidateFileModel> list)
         {
             logService.Log("Inserting People Vertices");
             var peopleList = list.Select(x =>
                             new PersonVertice() {
-                                Names = new List<string>(){ x.CandidateName, x.SocialCandidateName, x.CandidateNameOnCedule },
+                                Names = new List<string>() { x.CandidateName, x.SocialCandidateName, x.CandidateNameOnCedule },
                                 Cpf = x.Cpf
                             }
                         ).ToList();
@@ -101,6 +101,11 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
             await databaseService.AddVertices(peopleList, "person", "1", "Cpf");
         }
 
+        /// <summary>
+        /// Insert all polical party into the database
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
         private async Task InserPoliticalPartyVertices(List<TseCandidateFileModel> list)
         {
             logService.Log("Inserting Political Party Vertices");
@@ -140,6 +145,5 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
 
             await databaseService.AddEdges(edgeProperties, TseCandidateBelongsToPartyEdge.LabelName, fromFilters, toFilters);
         }
-
     }
 }

@@ -1,8 +1,11 @@
 ﻿using CsvHelper.Configuration;
 using PoliWebSearch.Parser.Shared.Models.Tse;
 
-namespace PoliWebSearch.Parser.FileParsers.Tse.FileParser.Candidates
+namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
 {
+    /// <summary>
+    /// Mapping between TSE Candidate file with model
+    /// </summary>
     class TseCandidateModelMapping : ClassMap<TseCandidateFileModel>
     {
         public TseCandidateModelMapping()

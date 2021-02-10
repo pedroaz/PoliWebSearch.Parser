@@ -2,15 +2,20 @@
 
 namespace PoliWebSearch.Parser.Shared.Resolver
 {
+    /// <summary>
+    /// Implementation of IServiceResolver
+    /// </summary>
     public class ServiceResolver : IServiceResolver
     {
         private IContainer container;
 
+        // <inheritdoc/>
         public void Initialize(IContainer container)
         {
             this.container = container;
         }
 
+        // <inheritdoc/>
         public T ResolveService<T>()
         {
             var obj = container.Resolve<T>();

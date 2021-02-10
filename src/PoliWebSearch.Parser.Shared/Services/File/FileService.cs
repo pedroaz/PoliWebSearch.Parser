@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace PoliWebSearch.Parser.Shared.Services.File
 {
+    /// <summary>
+    /// Implementation of IFileService
+    /// </summary>
     public class FileService : IFileService
     {
         private readonly ILogService logService;
@@ -14,6 +17,7 @@ namespace PoliWebSearch.Parser.Shared.Services.File
             this.logService = logService;
         }
 
+        // <inheritdoc/>
         public bool DirExists(string dirPath)
         {
             logService.Log($"Looking for folder in {dirPath}");
@@ -25,6 +29,7 @@ namespace PoliWebSearch.Parser.Shared.Services.File
             return true;
         }
 
+        // <inheritdoc/>
         public List<string> GetFilesFromDir(string dirPath)
         {
             logService.Log($"Searching on {dirPath} for files");

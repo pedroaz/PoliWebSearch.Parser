@@ -8,12 +8,18 @@ using System.Threading.Tasks;
 
 namespace PoliWebSerach.Parser.DB.Services.Admin
 {
+    /// <summary>
+    /// Type of admin operations
+    /// </summary>
     public enum AdminOperations
     {
         count,
         drop
     }
 
+    /// <summary>
+    /// Implementation of IAdminService
+    /// </summary>
     public class AdminService : IAdminService
     {
         private readonly IDatabaseService databaseService;
@@ -25,6 +31,7 @@ namespace PoliWebSerach.Parser.DB.Services.Admin
             this.logService = logService;
         }
 
+        // <inheritdoc/>
         public async Task<long> CountDatabase()
         {
             var result = JsonConvert.DeserializeObject<List<dynamic>>(await databaseService.ExecuteCustomQueryWithReturnValue("g.V().count()"));
@@ -32,6 +39,7 @@ namespace PoliWebSerach.Parser.DB.Services.Admin
             return result.First();
         }
 
+        // <inheritdoc/>
         public async Task DropDatabase()
         {
             logService.Log("Droping the database. This operation may take a while", LogType.Admin);

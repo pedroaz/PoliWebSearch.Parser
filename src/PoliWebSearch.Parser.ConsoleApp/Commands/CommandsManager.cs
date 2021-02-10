@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace PoliWebSearch.Parser.ConsoleApp.Commands
 {
+    /// <summary>
+    /// Implementation of the ICommandsManager interface
+    /// </summary>
     public class CommandsManager : ICommandsManager
     {
         // Commands
@@ -15,17 +18,18 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
 
         // Services
         private readonly ILogService logService;
-        private readonly ITseParserService tseParserService;
+        private readonly ITseService tseService;
         private readonly IAdminService adminService;
 
-        public CommandsManager(ILogService logService, ITseParserService tseParserService,
+        public CommandsManager(ILogService logService, ITseService tseParserService,
             IAdminService adminService)
         {
             this.logService = logService;
-            this.tseParserService = tseParserService;
+            this.tseService = tseParserService;
             this.adminService = adminService;
         }
 
+        // <inheritdoc/>
         public async Task Loop()
         {
             while (true) {
@@ -38,7 +42,7 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
                 if (currentCommand == "exit") {
                     break;
                 }
-                
+
                 var splittedCommand = currentCommand.Split(" ");
                 var result = await CommandLine.Parser.Default.ParseArguments<TseExecutionOptions, PdtExecutionOptions, AdminExecutionOptions>(splittedCommand)
                     .MapResult(
@@ -49,6 +53,12 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
             }
         }
 
+
+        /// <summary>
+        /// Executes Admin Operations
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
         private async Task<int> Execute(AdminExecutionOptions options)
         {
             logService.Log($"Executing Admin Operation: {options.operation}", LogType.Loop);
@@ -63,10 +73,15 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
             return 0;
         }
 
+        /// <summary>
+        /// Executes TSE operations
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
         private async Task<int> Execute(TseExecutionOptions options)
         {
             logService.Log($"Executing TSE Parser", LogType.Loop);
-            await tseParserService.ParseFiles(options.source, options.rowlimit, options.dropfirst);
+            await tseService.ParseFiles(options.source, options.rowlimit, options.dropfirst);
             return 0;
         }
     }

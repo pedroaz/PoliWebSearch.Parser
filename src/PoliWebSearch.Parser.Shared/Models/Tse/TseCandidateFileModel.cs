@@ -1,17 +1,23 @@
 ﻿namespace PoliWebSearch.Parser.Shared.Models.Tse
 {
+    /// <summary>
+    /// Model for the Tse Cadidate File
+    /// </summary>
     public class TseCandidateFileModel
     {
         public string CandidateName { get; set; }
         public string CandidateNameOnCedule { get; set; }
         private string socialName = "";
-        public string SocialCandidateName { 
-            get{
+        public string SocialCandidateName
+        {
+            get
+            {
                 return socialName;
-            } 
-            set{
+            }
+            set
+            {
                 socialName = value == "#NULO#" ? "" : value;
-            } 
+            }
         }
         public string Cpf { get; set; }
         public string PolitcPartyName { get; set; }

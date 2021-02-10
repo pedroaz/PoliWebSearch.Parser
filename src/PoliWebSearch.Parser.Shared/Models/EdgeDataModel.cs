@@ -1,6 +1,9 @@
 ﻿namespace PoliWebSearch.Parser.Shared.Models
 {
-    public class GeneralDataModel
+    /// <summary>
+    /// Generic edge data model
+    /// </summary>
+    public class EdgeDataModel
     {
         public virtual string DataSource { get; } = "";
     }
