@@ -37,7 +37,7 @@ namespace PoliWebSearch.Parser.ConsoleApp
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);
-                throw;
+                Console.ReadKey();
             }
         }
 

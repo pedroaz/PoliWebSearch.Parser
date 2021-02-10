@@ -15,5 +15,10 @@ namespace PoliWebSearch.Parser.Shared.Models.Person
         /// Unique CPF identification
         /// </summary>
         public string Cpf { get; set; }
+
+        /// <summary>
+        /// Name of the Cpf property
+        /// </summary>
+        public static string CpfPropertyName => nameof(Cpf);
     }
 }

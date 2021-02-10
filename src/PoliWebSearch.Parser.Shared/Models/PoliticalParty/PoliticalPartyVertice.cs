@@ -15,5 +15,7 @@ namespace PoliWebSearch.Parser.Shared.Models.PoliticalParty
         /// Abrevivation of the political party name
         /// </summary>
         public string PoliticalPartyAbbreviation { get; set; }
+
+        public static string PoliticalPartyAbbreviationPropertyName => nameof(PoliticalPartyAbbreviation);
     }
 }

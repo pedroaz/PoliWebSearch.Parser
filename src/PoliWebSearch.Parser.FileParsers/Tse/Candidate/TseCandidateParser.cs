@@ -8,7 +8,6 @@ using PoliWebSearch.Parser.Shared.Services.Clock;
 using PoliWebSearch.Parser.Shared.Services.File;
 using PoliWebSearch.Parser.Shared.Services.Log;
 using PoliWebSerach.Parser.DB.Operator;
-using PoliWebSerach.Parser.DB.Services.Admin;
 using PoliWebSerach.Parser.DB.Services.Database;
 using System.Collections.Generic;
 using System.IO;
@@ -28,10 +27,9 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
         private readonly IFileService fileService;
         private readonly IClockService clockService;
         private readonly IDatabaseService databaseService;
-        private readonly IAdminService adminService;
 
         public TseCandidateParser(ILogService logService, IConfiguratorService configurator, ITseCandidatesFileParser candidatesFileParser,
-            IFileService fileService, IClockService clockService, IDatabaseService databaseService, IAdminService adminService)
+            IFileService fileService, IClockService clockService, IDatabaseService databaseService)
         {
             this.logService = logService;
             this.configurator = configurator;
@@ -39,7 +37,6 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
             this.fileService = fileService;
             this.clockService = clockService;
             this.databaseService = databaseService;
-            this.adminService = adminService;
         }
 
         /// <summary>
@@ -98,7 +95,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
                             }
                         ).ToList();
 
-            await databaseService.AddVertices(peopleList, "person", "1", "Cpf");
+            await databaseService.AddVertices(peopleList, "person", "1", PersonVertice.CpfPropertyName);
         }
 
         /// <summary>
@@ -118,7 +115,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
 
             partyList = partyList.DistinctBy(x => x.PoliticalPartyAbbreviation).ToList();
 
-            await databaseService.AddVertices(partyList, "political_party", "1", "PoliticalPartyAbbreviation");
+            await databaseService.AddVertices(partyList, "political_party", "1", PoliticalPartyVertice.PoliticalPartyAbbreviationPropertyName);
         }
 
 
@@ -139,8 +136,8 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
             foreach (var item in list) {
 
                 edgeProperties.Add(new TseCandidateBelongsToPartyEdge());
-                fromFilters.Add(new VerticeFilter("Cpf", item.Cpf));
-                toFilters.Add(new VerticeFilter("PolitcPartyAbbreviation", item.PolitcPartyAbbreviation));
+                fromFilters.Add(new VerticeFilter(PersonVertice.CpfPropertyName, item.Cpf));
+                toFilters.Add(new VerticeFilter(PoliticalPartyVertice.PoliticalPartyAbbreviationPropertyName, item.PolitcPartyAbbreviation));
             }
 
             await databaseService.AddEdges(edgeProperties, TseCandidateBelongsToPartyEdge.LabelName, fromFilters, toFilters);
