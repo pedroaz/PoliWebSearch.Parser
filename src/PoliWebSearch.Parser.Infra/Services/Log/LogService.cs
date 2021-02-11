@@ -65,10 +65,21 @@ namespace PoliWebSearch.Parser.Infra.Services.Log
         }
 
         // <inheritdoc/>
-        public void Log(string message, LogType type = LogType.None, LogLevel level = LogLevel.Information,
+        public void Log(string message, LogType type = LogType.None, LogLevel level = LogLevel.Information)
+        {
+            InternalLog(message, type, level);
+        }
+
+        // <inheritdoc/>
+        public void Log(Exception e, LogType type = LogType.None)
+        {
+            Log(e.Message, type: type, level: LogLevel.Error);
+        }
+
+        // <inheritdoc/>
+        private void InternalLog(string message, LogType type = LogType.None, LogLevel level = LogLevel.Information,
             [CallerFilePath] string file = "", [CallerMemberName] string method = "", [CallerLineNumber] int number = 0)
         {
-
             string line = CreateLogLine(message, Path.GetFileName(file), method, number, type);
 
             switch (level) {
@@ -84,12 +95,6 @@ namespace PoliWebSearch.Parser.Infra.Services.Log
                 default:
                     break;
             }
-        }
-
-        // <inheritdoc/>
-        public void Log(Exception e, LogType type = LogType.None, [CallerFilePath] string file = "", [CallerMemberName] string method = "", [CallerLineNumber] int number = 0)
-        {
-            Log(e.Message, type: type, level: LogLevel.Error);
         }
 
         /// <summary>
@@ -140,5 +145,7 @@ namespace PoliWebSearch.Parser.Infra.Services.Log
         {
             Console.Write(message);
         }
+
+        
     }
 }
