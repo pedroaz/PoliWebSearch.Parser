@@ -5,11 +5,29 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoliWebSearch.Parser.ConsoleApp", "src\PoliWebSearch.Parser.ConsoleApp\PoliWebSearch.Parser.ConsoleApp.csproj", "{2DB100C1-987C-4828-87CA-4B236A7F270E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoliWebSearch.Parser.Shared", "src\PoliWebSearch.Parser.Shared\PoliWebSearch.Parser.Shared.csproj", "{7E918A1B-708A-479E-8B90-504887D0533F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoliWebSearch.Parser.Domain", "src\PoliWebSearch.Parser.Shared\PoliWebSearch.Parser.Domain.csproj", "{7E918A1B-708A-479E-8B90-504887D0533F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoliWebSearch.Parser.FileParsers", "src\PoliWebSearch.Parser.FileParsers\PoliWebSearch.Parser.FileParsers.csproj", "{E30B1123-878F-4957-AB3D-71FBA58A0094}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoliWebSerach.Parser.DB", "src\PoliWebSerach.Parser.DB\PoliWebSerach.Parser.DB.csproj", "{E6C57B25-53F0-4603-A3C8-5F7B22552EC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoliWebSerach.Parser.DB", "src\PoliWebSerach.Parser.DB\PoliWebSerach.Parser.DB.csproj", "{E6C57B25-53F0-4603-A3C8-5F7B22552EC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Presentation", "0.Presentation", "{771573EB-6A9C-4704-9AC7-0DFED90A2F23}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Application", "1.Application", "{8FB58FE2-8417-446B-88C4-DB55BB3572BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domain", "2.Domain", "{57600F0F-0A3E-40AF-9613-0AE536D6828E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Infrastructure", "3.Infrastructure", "{5884771A-1C63-42F4-9CF6-4FC93C9B4400}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Persistence", "4.Persistence", "{65637AD0-33A4-41F7-93C5-C5BD947C66C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{44889C26-CD69-45A2-9F7E-C0184B03BA61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{8D02D125-A1BE-4E1C-AFBD-6BAEF518947B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{ADD5D960-F1E7-4675-8729-5681EA35273C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoliWebSearch.Parser.Infra", "src\PoliWebSearch.Parser.Infra\PoliWebSearch.Parser.Infra.csproj", "{1CD947B2-AB15-48F6-AB3E-3D23FF5FD8CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +51,22 @@ Global
 		{E6C57B25-53F0-4603-A3C8-5F7B22552EC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6C57B25-53F0-4603-A3C8-5F7B22552EC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6C57B25-53F0-4603-A3C8-5F7B22552EC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CD947B2-AB15-48F6-AB3E-3D23FF5FD8CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CD947B2-AB15-48F6-AB3E-3D23FF5FD8CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CD947B2-AB15-48F6-AB3E-3D23FF5FD8CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CD947B2-AB15-48F6-AB3E-3D23FF5FD8CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2DB100C1-987C-4828-87CA-4B236A7F270E} = {771573EB-6A9C-4704-9AC7-0DFED90A2F23}
+		{7E918A1B-708A-479E-8B90-504887D0533F} = {57600F0F-0A3E-40AF-9613-0AE536D6828E}
+		{E30B1123-878F-4957-AB3D-71FBA58A0094} = {8FB58FE2-8417-446B-88C4-DB55BB3572BA}
+		{E6C57B25-53F0-4603-A3C8-5F7B22552EC0} = {65637AD0-33A4-41F7-93C5-C5BD947C66C6}
+		{8D02D125-A1BE-4E1C-AFBD-6BAEF518947B} = {44889C26-CD69-45A2-9F7E-C0184B03BA61}
+		{ADD5D960-F1E7-4675-8729-5681EA35273C} = {44889C26-CD69-45A2-9F7E-C0184B03BA61}
+		{1CD947B2-AB15-48F6-AB3E-3D23FF5FD8CC} = {5884771A-1C63-42F4-9CF6-4FC93C9B4400}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C07E1C2E-C030-45EB-A52B-6C4F1BCEC953}

@@ -1,9 +1,9 @@
-﻿using PoliWebSearch.Parser.Shared.Services.Log;
+﻿using PoliWebSearch.Parser.Infra.Services.Log;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace PoliWebSearch.Parser.Shared.Services.Clock
+namespace PoliWebSearch.Parser.Infra.Services.Clock
 {
     /// <summary>
     /// Implementation of IClockService

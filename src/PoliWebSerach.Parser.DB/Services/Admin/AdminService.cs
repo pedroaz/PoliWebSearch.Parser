@@ -1,6 +1,6 @@
 ﻿using Gremlin.Net.Driver.Exceptions;
 using Newtonsoft.Json;
-using PoliWebSearch.Parser.Shared.Services.Log;
+using PoliWebSearch.Parser.Infra.Services.Log;
 using PoliWebSerach.Parser.DB.Services.Database;
 using System.Collections.Generic;
 using System.Linq;

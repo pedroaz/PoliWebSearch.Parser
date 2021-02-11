@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace PoliWebSearch.Parser.Shared.Services.Clock
+namespace PoliWebSearch.Parser.Infra.Services.Clock
 {
     /// <summary>
     /// Implementation of tasks related to time

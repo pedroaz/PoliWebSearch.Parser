@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace PoliWebSearch.Parser.Shared.Resolver
+namespace PoliWebSearch.Parser.Infra.Resolver
 {
     /// <summary>
     /// Service resolve whcih can be used the get instnace of interfaces

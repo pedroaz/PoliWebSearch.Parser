@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PoliWebSearch.Parser.Shared.Services.File
+namespace PoliWebSearch.Parser.Infra.Services.File
 {
     /// <summary>
     /// Useful File operations (System.IO)

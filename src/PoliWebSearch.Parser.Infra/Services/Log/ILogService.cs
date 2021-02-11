@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace PoliWebSearch.Parser.Shared.Services.Log
+namespace PoliWebSearch.Parser.Infra.Services.Log
 {
     /// <summary>
     /// Class responsable for the application logs

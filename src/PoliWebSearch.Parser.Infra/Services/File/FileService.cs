@@ -1,9 +1,9 @@
-﻿using PoliWebSearch.Parser.Shared.Services.Log;
+﻿using PoliWebSearch.Parser.Infra.Services.Log;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace PoliWebSearch.Parser.Shared.Services.File
+namespace PoliWebSearch.Parser.Infra.Services.File
 {
     /// <summary>
     /// Implementation of IFileService

@@ -10,7 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PoliWebSearch.Parser.Shared\PoliWebSearch.Parser.Shared.csproj" />
+    <ProjectReference Include="..\PoliWebSearch.Parser.Infra\PoliWebSearch.Parser.Infra.csproj" />
+    <ProjectReference Include="..\PoliWebSearch.Parser.Shared\PoliWebSearch.Parser.Domain.csproj" />
     <ProjectReference Include="..\PoliWebSerach.Parser.DB\PoliWebSerach.Parser.DB.csproj" />
   </ItemGroup>
 

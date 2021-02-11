@@ -1,5 +1,5 @@
 ﻿using PoliWebSearch.Parser.FileParsers.Tse.Candidate;
-using PoliWebSearch.Parser.Shared.Services.Log;
+using PoliWebSearch.Parser.Infra.Services.Log;
 using PoliWebSerach.Parser.DB.Services.Admin;
 using System.Threading.Tasks;
 

@@ -2,11 +2,11 @@
 using PoliWebSearch.Parser.ConsoleApp.Commands;
 using PoliWebSearch.Parser.FileParsers.Tse.Candidate;
 using PoliWebSearch.Parser.FileParsers.Tse.Service;
-using PoliWebSearch.Parser.Shared.Configurator;
-using PoliWebSearch.Parser.Shared.Resolver;
-using PoliWebSearch.Parser.Shared.Services.Clock;
-using PoliWebSearch.Parser.Shared.Services.File;
-using PoliWebSearch.Parser.Shared.Services.Log;
+using PoliWebSearch.Parser.Infra.Configurator;
+using PoliWebSearch.Parser.Infra.Resolver;
+using PoliWebSearch.Parser.Infra.Services.Clock;
+using PoliWebSearch.Parser.Infra.Services.File;
+using PoliWebSearch.Parser.Infra.Services.Log;
 using PoliWebSerach.Parser.DB.Operator;
 using PoliWebSerach.Parser.DB.Services.Admin;
 using PoliWebSerach.Parser.DB.Services.Database;

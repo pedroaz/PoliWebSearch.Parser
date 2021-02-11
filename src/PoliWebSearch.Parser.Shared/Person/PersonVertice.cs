@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using PoliWebSearch.Parser.Domain.Edges;
+using System.Collections.Generic;
 
-namespace PoliWebSearch.Parser.Shared.Models.Person
+namespace PoliWebSearch.Parser.Domain.Person
 {
     /// <summary>
     /// Data representation of a person vertice

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 
-namespace PoliWebSearch.Parser.Shared.Configurator
+namespace PoliWebSearch.Parser.Infra.Configurator
 {
     /// <summary>
     /// Implementation of IConfigurationService

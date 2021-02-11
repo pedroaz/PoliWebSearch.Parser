@@ -1,7 +1,7 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using PoliWebSearch.Parser.Shared.Models.Tse;
-using PoliWebSearch.Parser.Shared.Services.Log;
+using PoliWebSearch.Parser.Domain.Tse;
+using PoliWebSearch.Parser.Infra.Services.Log;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

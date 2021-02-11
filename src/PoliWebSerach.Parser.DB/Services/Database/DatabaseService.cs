@@ -1,7 +1,7 @@
 ﻿using Gremlin.Net.Driver;
-using PoliWebSearch.Parser.Shared.Configurator;
-using PoliWebSearch.Parser.Shared.Resolver;
-using PoliWebSearch.Parser.Shared.Services.Clock;
+using PoliWebSearch.Parser.Infra.Configurator;
+using PoliWebSearch.Parser.Infra.Resolver;
+using PoliWebSearch.Parser.Infra.Services.Clock;
 using PoliWebSerach.Parser.DB.Operator;
 using System;
 using System.Collections.Generic;

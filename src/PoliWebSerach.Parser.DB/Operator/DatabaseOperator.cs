@@ -3,7 +3,7 @@ using Gremlin.Net.Driver;
 using Gremlin.Net.Structure.IO.GraphSON;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PoliWebSearch.Parser.Shared.Services.Log;
+using PoliWebSearch.Parser.Infra.Services.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;

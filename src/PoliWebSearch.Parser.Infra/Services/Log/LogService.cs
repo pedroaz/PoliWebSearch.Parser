@@ -1,11 +1,11 @@
-﻿using PoliWebSearch.Parser.Shared.Configurator;
+﻿using PoliWebSearch.Parser.Infra.Configurator;
 using Serilog;
 using Serilog.Core;
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 
-namespace PoliWebSearch.Parser.Shared.Services.Log
+namespace PoliWebSearch.Parser.Infra.Services.Log
 {
     /// <summary>
     /// Log level (Information, Warning or Error)

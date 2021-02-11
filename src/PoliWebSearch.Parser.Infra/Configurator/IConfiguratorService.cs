@@ -1,4 +1,4 @@
-﻿namespace PoliWebSearch.Parser.Shared.Configurator
+﻿namespace PoliWebSearch.Parser.Infra.Configurator
 {
     /// <summary>
     /// Handles all application configuration
