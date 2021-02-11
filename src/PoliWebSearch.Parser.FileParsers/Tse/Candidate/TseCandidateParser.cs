@@ -1,5 +1,6 @@
 ﻿using MoreLinq;
 using PoliWebSearch.Parser.Domain.Edges.Tse;
+using PoliWebSearch.Parser.Domain.FileParsing.Tse.Candidate;
 using PoliWebSearch.Parser.Domain.Vertices;
 using PoliWebSearch.Parser.Infra.Configurator;
 using PoliWebSearch.Parser.Infra.Services.Clock;
@@ -106,8 +107,8 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
             logService.Log("Inserting Political Party Vertices");
             var partyList = list.Select(x =>
                             new PoliticalPartyVertice() {
-                                PoliticalPartyAbbreviation = x.PolitcPartyAbbreviation,
-                                PoliticalPartyName = x.PolitcPartyName
+                                PoliticalPartyAbbreviation = x.PoliticalPartyAbbreviation,
+                                PoliticalPartyName = x.PoliticalPartyName
                             }
                         ).ToList();
 
@@ -135,7 +136,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
 
                 edgeProperties.Add(new TseCandidateBelongsToPartyEdge());
                 fromFilters.Add(new VerticeFilter(PersonVertice.CpfPropertyName, item.Cpf));
-                toFilters.Add(new VerticeFilter(PoliticalPartyVertice.PoliticalPartyAbbreviationPropertyName, item.PolitcPartyAbbreviation));
+                toFilters.Add(new VerticeFilter(PoliticalPartyVertice.PoliticalPartyAbbreviationPropertyName, item.PoliticalPartyAbbreviation));
             }
 
             await databaseService.AddEdges(edgeProperties, TseCandidateBelongsToPartyEdge.LabelName, fromFilters, toFilters);

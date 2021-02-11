@@ -1,6 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using PoliWebSearch.Parser.Domain.Tse;
+using PoliWebSearch.Parser.Domain.FileParsing.Tse.Candidate;
 using PoliWebSearch.Parser.Infra.Services.Log;
 using System;
 using System.Collections.Generic;
