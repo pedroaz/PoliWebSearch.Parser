@@ -1,6 +1,6 @@
-﻿using PoliWebSearch.Parser.Domain.Tse;
+﻿using PoliWebSearch.Parser.Domain.Edges.Base;
 
-namespace PoliWebSearch.Parser.Domain.PoliticalParty
+namespace PoliWebSearch.Parser.Domain.Vertices.PoliticalParty
 {
     /// <summary>
     /// Political party data representation

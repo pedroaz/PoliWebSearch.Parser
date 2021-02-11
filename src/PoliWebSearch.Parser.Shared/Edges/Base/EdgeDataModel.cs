@@ -1,4 +1,4 @@
-﻿namespace PoliWebSearch.Parser.Domain.Edges
+﻿namespace PoliWebSearch.Parser.Domain.Edges.Base
 {
     /// <summary>
     /// Generic edge data model

@@ -1,6 +1,6 @@
 ﻿using PoliWebSearch.Parser.Domain.Edges;
 
-namespace PoliWebSearch.Parser.Domain.Tse
+namespace PoliWebSearch.Parser.Domain.Edges.Base
 {
     /// <summary>
     /// Represents and edge whcih came from the TSE data

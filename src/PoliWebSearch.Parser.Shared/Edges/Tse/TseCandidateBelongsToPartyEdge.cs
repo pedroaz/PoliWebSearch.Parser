@@ -1,6 +1,6 @@
-﻿using PoliWebSearch.Parser.Domain.Tse;
+﻿using PoliWebSearch.Parser.Domain.Edges.Base;
 
-namespace PoliWebSearch.Parser.Domain.Edges
+namespace PoliWebSearch.Parser.Domain.Edges.Tse
 {
     /// <summary>
     /// Relationship between candidate and party

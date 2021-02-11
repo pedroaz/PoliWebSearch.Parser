@@ -1,4 +1,4 @@
-﻿namespace PoliWebSearch.Parser.Domain.Tse
+﻿namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
 {
     /// <summary>
     /// Model for the Tse Cadidate File
