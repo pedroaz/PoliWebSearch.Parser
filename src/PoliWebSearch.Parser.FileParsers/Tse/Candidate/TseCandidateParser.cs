@@ -90,7 +90,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
             var peopleList = list.Select(x =>
                             new PersonVertice() {
                                 Names = new List<string>() { x.CandidateName, x.SocialCandidateName, x.CandidateNameOnCedule },
-                                Cpf = x.Cpf
+                                Cpf = x.CandidateCpf
                             }
                         ).ToList();
 
@@ -135,7 +135,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
             foreach (var item in list) {
 
                 edgeProperties.Add(new TseCandidateBelongsToPartyEdge());
-                fromFilters.Add(new VerticeFilter(PersonVertice.CpfPropertyName, item.Cpf));
+                fromFilters.Add(new VerticeFilter(PersonVertice.CpfPropertyName, item.CandidateCpf));
                 toFilters.Add(new VerticeFilter(PoliticalPartyVertice.PoliticalPartyAbbreviationPropertyName, item.PoliticalPartyAbbreviation));
             }
 

@@ -20,9 +20,20 @@
                 socialName = value == "#NULO#" ? "" : value;
             }
         }
-        public string Cpf { get; set; }
+        public string CandidateCpf { get; set; }
         public string CandidateEmail { get; set; }
         public string CandidateNacionality { get; set; }
+        public string CandidateUfOfBirth { get; set; }
+        public string CandidateCityOfBirth { get; set; }
+        public string CandidateGender { get; set; }
+        public string CandidateEducationDegree { get; set; }
+        public string CandidateCivilStatus { get; set; }
+        public string CandidateSkinColor { get; set; }
+        public string CandidateOccupation { get; set; }
+        public string CandidateOccupationCode { get; set; }
+
+
+        public string CandidateMaxSpending { get; set; }
 
         // Political Party
         public string PoliticalPartyName { get; set; }
@@ -44,6 +55,8 @@
         // Political Job
         public string PoliticalJobCode { get; set; }
         public string PoliticalJobName { get; set; }
-        
+
+        // Gender
+
     }
 }
