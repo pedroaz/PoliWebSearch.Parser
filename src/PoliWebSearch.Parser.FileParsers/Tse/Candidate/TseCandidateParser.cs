@@ -1,8 +1,6 @@
 ﻿using MoreLinq;
-using PoliWebSearch.Parser.Domain.Edges;
-using PoliWebSearch.Parser.Domain.Person;
-using PoliWebSearch.Parser.Domain.PoliticalParty;
-using PoliWebSearch.Parser.Domain.Tse;
+using PoliWebSearch.Parser.Domain.Edges.Tse;
+using PoliWebSearch.Parser.Domain.Vertices;
 using PoliWebSearch.Parser.Infra.Configurator;
 using PoliWebSearch.Parser.Infra.Services.Clock;
 using PoliWebSearch.Parser.Infra.Services.File;

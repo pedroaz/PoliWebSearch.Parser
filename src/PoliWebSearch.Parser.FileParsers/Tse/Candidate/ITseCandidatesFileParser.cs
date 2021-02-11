@@ -1,5 +1,4 @@
-﻿using PoliWebSearch.Parser.Domain.Tse;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
 {

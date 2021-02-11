@@ -1,6 +1,6 @@
 ﻿using PoliWebSearch.Parser.Domain.Edges.Base;
 
-namespace PoliWebSearch.Parser.Domain.Vertices.PoliticalParty
+namespace PoliWebSearch.Parser.Domain.Vertices
 {
     /// <summary>
     /// Political party data representation
@@ -16,6 +16,9 @@ namespace PoliWebSearch.Parser.Domain.Vertices.PoliticalParty
         /// </summary>
         public string PoliticalPartyAbbreviation { get; set; }
 
+        /// <summary>
+        /// Name of the political party property
+        /// </summary>
         public static string PoliticalPartyAbbreviationPropertyName => nameof(PoliticalPartyAbbreviation);
     }
 }
