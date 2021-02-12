@@ -90,7 +90,10 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
             var peopleList = list.Select(x =>
                             new PersonVertice() {
                                 Names = new List<string>() { x.CandidateName, x.SocialCandidateName, x.CandidateNameOnCedule },
-                                Cpf = x.CandidateCpf
+                                Cpf = x.CandidateCpf,
+                                BirthDate = x.CandidateBirthDateAsDateTime,
+                                Emails = new List<string>() { x.CandidateEmail },
+                                Genders = new List<string>() { x.CandidateGender } 
                             }
                         ).ToList();
 

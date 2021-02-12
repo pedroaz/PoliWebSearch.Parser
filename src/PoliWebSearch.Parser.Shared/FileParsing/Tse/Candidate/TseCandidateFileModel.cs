@@ -1,4 +1,6 @@
-﻿namespace PoliWebSearch.Parser.Domain.FileParsing.Tse.Candidate
+﻿using System;
+
+namespace PoliWebSearch.Parser.Domain.FileParsing.Tse.Candidate
 {
     /// <summary>
     /// Model for the Tse Cadidate File
@@ -31,6 +33,9 @@
         public string CandidateSkinColor { get; set; }
         public string CandidateOccupation { get; set; }
         public string CandidateOccupationCode { get; set; }
+        public string CandidateBirthDate { get; set; }
+        public DateTime CandidateBirthDateAsDateTime => Convert.ToDateTime(CandidateBirthDate);
+        
 
 
         public string CandidateMaxSpending { get; set; }

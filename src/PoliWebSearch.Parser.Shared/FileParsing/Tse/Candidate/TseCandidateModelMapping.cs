@@ -25,6 +25,7 @@ namespace PoliWebSearch.Parser.Domain.FileParsing.Tse.Candidate
             Map(m => m.CandidateOccupation).Name("DS_OCUPACAO");
             Map(m => m.CandidateOccupationCode).Name("CD_OCUPACAO");
             Map(m => m.CandidateMaxSpending).Name("VR_DESPESA_MAX_CAMPANHA");
+            Map(m => m.CandidateBirthDate).Name("DT_NASCIMENTO");
 
 
             // Political Party
