@@ -13,5 +13,12 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
         /// </summary>
         /// <returns></returns>
         Task Loop();
+
+        /// <summary>
+        /// Execute a single command. If a second parameter is passsed on the console app this method will be executed
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns>Returns true if the application should end</returns>
+        Task<bool> ExecuteSingleCommand(string command);
     }
 }

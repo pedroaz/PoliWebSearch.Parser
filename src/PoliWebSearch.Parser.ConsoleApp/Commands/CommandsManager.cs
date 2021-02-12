@@ -13,9 +13,6 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
     /// </summary>
     public class CommandsManager : ICommandsManager
     {
-        // Commands
-        static string currentCommand;
-
         // Services
         private readonly ILogService logService;
         private readonly ITseService tseService;
@@ -29,27 +26,33 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
             this.adminService = adminService;
         }
 
+        public async Task<bool> ExecuteSingleCommand(string command)
+        {
+            logService.Log($"Command recieved: {command}", LogType.Loop);
+
+            if (command == "exit") {
+                return await Task.FromResult(true);
+            }
+
+            var splittedCommand = command.Split(" ");
+            var result = await CommandLine.Parser.Default.ParseArguments<TseExecutionOptions, PdtExecutionOptions, AdminExecutionOptions>(splittedCommand)
+                .MapResult(
+                    (TseExecutionOptions options) => Execute(options),
+                    (AdminExecutionOptions options) => Execute(options),
+                    _ => Task.FromResult(1)
+                );
+
+            return await Task.FromResult(false);
+        }
+
         // <inheritdoc/>
         public async Task Loop()
         {
             while (true) {
-
                 logService.Log($"Please type a new command. Or type --help if you don't know what you are doing", LogType.Loop);
-
-                currentCommand = Console.ReadLine();
-                logService.Log($"Command recieved: {currentCommand}", LogType.Loop);
-
-                if (currentCommand == "exit") {
-                    break;
-                }
-
-                var splittedCommand = currentCommand.Split(" ");
-                var result = await CommandLine.Parser.Default.ParseArguments<TseExecutionOptions, PdtExecutionOptions, AdminExecutionOptions>(splittedCommand)
-                    .MapResult(
-                        (TseExecutionOptions options) => Execute(options),
-                        (AdminExecutionOptions options) => Execute(options),
-                        _ => Task.FromResult(1)
-                    );
+                var currentCommand = Console.ReadLine();
+                var shouldExit = await ExecuteSingleCommand(currentCommand);
+                if (shouldExit) break;
             }
         }
 

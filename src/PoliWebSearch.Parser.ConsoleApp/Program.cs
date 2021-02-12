@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using PoliWebSearch.Parser.ConsoleApp.Arguments;
 using PoliWebSearch.Parser.ConsoleApp.Commands;
 using PoliWebSearch.Parser.FileParsers.Tse.Candidate;
 using PoliWebSearch.Parser.FileParsers.Tse.Service;
@@ -18,7 +19,7 @@ namespace PoliWebSearch.Parser.ConsoleApp
     /// <summary>
     /// Static Program class
     /// </summary>
-    static class Program
+    public static class Program
     {
         // Services 
         private static IContainer container;
@@ -30,14 +31,14 @@ namespace PoliWebSearch.Parser.ConsoleApp
         /// Main entry point for the application
         /// </summary>
         /// <param name="args">Should recieve the App Env</param>
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             try {
                 MainAsync(args).Wait();
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);
-                Console.ReadKey();
+                throw e;
             }
         }
 
@@ -51,30 +52,21 @@ namespace PoliWebSearch.Parser.ConsoleApp
             LogService.Print("*** Starting Poli Web Search ***");
             LogService.Print("*** Initializing intefaces ***");
             RegisterInterfaces();
-            string envPath = GetEnvPathFromArgs(args);
-            if (envPath.Equals(string.Empty)) {
+            var commandArgs = new ProgramArguments(args);
+            if (!commandArgs.HasEnvFolder) {
                 throw new Exception("Need to pass env folder for the app to execute");
             }
-
+            
             ResolveInterfaces();
-            InitializeIntefaces(envPath);
-            await commandsManager.Loop();
-            LogService.Print("*** Finished console app ***");
-        }
-
-        /// <summary>
-        /// Returns the env path from the console app args. Thros an exception if no arguments are passed
-        /// </summary>
-        /// <param name="args">Console app args</param>
-        /// <returns></returns>
-        private static string GetEnvPathFromArgs(string[] args)
-        {
-            if (args.Length != 1) {
-                throw new Exception("Need to pass env folder for the app to execute");
+            InitializeIntefaces(commandArgs.EnvFolder);
+            
+            if (commandArgs.HasCommand) {
+                await commandsManager.ExecuteSingleCommand(commandArgs.Command);
             }
             else {
-                return args[0];
+                await commandsManager.Loop();
             }
+            LogService.Print("*** Finished console app ***");
         }
 
         /// <summary>

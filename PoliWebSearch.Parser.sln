@@ -33,11 +33,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoliWebSearch.Parser.UnitTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoliWebSearch.Parser.UnitTests.FileParsers", "tests\PoliWebSearch.Parser.UnitTests.FileParsers\PoliWebSearch.Parser.UnitTests.FileParsers.csproj", "{E50280C6-01CF-40FF-A94B-BD5DBDEEEB2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoliWebSearch.Parser.UnitTests.Domain", "tests\PoliWebSearch.Parser.UnitTests.Domain\PoliWebSearch.Parser.UnitTests.Domain.csproj", "{10E4E9E6-7EA8-41C6-A786-1DC76001F917}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoliWebSearch.Parser.UnitTests.Domain", "tests\PoliWebSearch.Parser.UnitTests.Domain\PoliWebSearch.Parser.UnitTests.Domain.csproj", "{10E4E9E6-7EA8-41C6-A786-1DC76001F917}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoliWebSearch.Parser.UnitTests.FileParsers.Infra", "tests\PoliWebSearch.Parser.UnitTests.FileParsers.Infra\PoliWebSearch.Parser.UnitTests.FileParsers.Infra.csproj", "{CDB33F71-8F3A-49E0-9927-BF3104AFC321}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoliWebSearch.Parser.UnitTests.FileParsers.Infra", "tests\PoliWebSearch.Parser.UnitTests.FileParsers.Infra\PoliWebSearch.Parser.UnitTests.FileParsers.Infra.csproj", "{CDB33F71-8F3A-49E0-9927-BF3104AFC321}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoliWebSearch.Parser.UnitTests.FileParsers.DB", "tests\PoliWebSearch.Parser.UnitTests.FileParsers.DB\PoliWebSearch.Parser.UnitTests.FileParsers.DB.csproj", "{6257EA5C-5C9F-45AA-AB7A-08AF529F5C25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoliWebSearch.Parser.UnitTests.FileParsers.DB", "tests\PoliWebSearch.Parser.UnitTests.FileParsers.DB\PoliWebSearch.Parser.UnitTests.FileParsers.DB.csproj", "{6257EA5C-5C9F-45AA-AB7A-08AF529F5C25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoliWebSearch.Parser.IntegrationTests", "tests\PoliWebSearch.Parser.IntegrationTests\PoliWebSearch.Parser.IntegrationTests.csproj", "{BE09C580-8270-42B4-ACF7-92BCEF7865D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +87,10 @@ Global
 		{6257EA5C-5C9F-45AA-AB7A-08AF529F5C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6257EA5C-5C9F-45AA-AB7A-08AF529F5C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6257EA5C-5C9F-45AA-AB7A-08AF529F5C25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE09C580-8270-42B4-ACF7-92BCEF7865D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE09C580-8270-42B4-ACF7-92BCEF7865D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE09C580-8270-42B4-ACF7-92BCEF7865D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE09C580-8270-42B4-ACF7-92BCEF7865D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{10E4E9E6-7EA8-41C6-A786-1DC76001F917} = {8D02D125-A1BE-4E1C-AFBD-6BAEF518947B}
 		{CDB33F71-8F3A-49E0-9927-BF3104AFC321} = {8D02D125-A1BE-4E1C-AFBD-6BAEF518947B}
 		{6257EA5C-5C9F-45AA-AB7A-08AF529F5C25} = {8D02D125-A1BE-4E1C-AFBD-6BAEF518947B}
+		{BE09C580-8270-42B4-ACF7-92BCEF7865D9} = {ADD5D960-F1E7-4675-8729-5681EA35273C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C07E1C2E-C030-45EB-A52B-6C4F1BCEC953}

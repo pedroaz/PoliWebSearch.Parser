@@ -5,6 +5,9 @@ project.lock.json
 *.pyc
 nupkg/
 
+*Log.txt
+appConfig.json
+
 # Visual Studio Code
 .vscode
 
