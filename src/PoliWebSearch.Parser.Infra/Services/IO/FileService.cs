@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace PoliWebSearch.Parser.Infra.Services.File
+namespace PoliWebSearch.Parser.Infra.Services.IO
 {
     /// <summary>
     /// Implementation of IFileService
@@ -36,6 +36,17 @@ namespace PoliWebSearch.Parser.Infra.Services.File
             var files = Directory.GetFiles(dirPath);
             logService.Log($"Found {files.Length} inside this folder");
             return files.ToList();
+        }
+
+        // <inheritdoc/>
+        public int GetAmountOfFilesInDir(string dirPath)
+        {
+            return Directory.GetFiles(dirPath).Length;
+        }
+
+        public void WriteAllText(string content, string path)
+        {
+            File.WriteAllText(path, content);
         }
     }
 }

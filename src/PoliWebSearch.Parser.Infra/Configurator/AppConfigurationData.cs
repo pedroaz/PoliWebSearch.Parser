@@ -33,5 +33,14 @@
         /// Where the log directory is
         /// </summary>
         public string LogDirectory { get; set; }
+        /// <summary>
+        /// Where the results are
+        /// </summary>
+        public string ResultsDirectory { get; set; }
+
+        /// <summary>
+        /// Get the execution ID based on the files from log / result folder
+        /// </summary>
+        public string ExecutionId { get; set; }
     }
 }

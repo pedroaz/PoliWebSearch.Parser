@@ -1,4 +1,7 @@
 ﻿using Newtonsoft.Json;
+using PoliWebSearch.Parser.Infra.Services.IO;
+using PoliWebSearch.Parser.Infra.Services.Log;
+using System;
 using System.IO;
 
 namespace PoliWebSearch.Parser.Infra.Configurator
@@ -9,7 +12,6 @@ namespace PoliWebSearch.Parser.Infra.Configurator
     public class ConfiguratorService : IConfiguratorService
     {
         private AppConfigurationData appConfiguration;
-
         public AppConfigurationData AppConfig => appConfiguration;
 
         // <inheritdoc/>
@@ -20,6 +22,24 @@ namespace PoliWebSearch.Parser.Infra.Configurator
             appConfiguration.EnvDirectory = envDir;
             appConfiguration.StorageDirectory = Path.Join(envDir, "storage");
             appConfiguration.LogDirectory = Path.Join(envDir, "log");
+            appConfiguration.ResultsDirectory = Path.Join(envDir, "results");
+            CreateDirectories();
+            SetExecutionId();
+        }
+
+        private void CreateDirectories()
+        {
+            Directory.CreateDirectory(appConfiguration.LogDirectory);
+            Directory.CreateDirectory(appConfiguration.ResultsDirectory);
+        }
+
+        private void SetExecutionId()
+        {
+            int amountOfFilesInLogFolder = Directory.GetFiles(appConfiguration.LogDirectory).Length;
+            int amountOfFilesInResultFolder = Directory.GetFiles(appConfiguration.ResultsDirectory).Length;
+            int maxIndex = Math.Max(amountOfFilesInResultFolder, amountOfFilesInLogFolder) + 1;
+            appConfiguration.ExecutionId = maxIndex.ToString();
+            LogService.Print($"*** Execution Id:  [{appConfiguration.ExecutionId}] ***");
         }
     }
 }

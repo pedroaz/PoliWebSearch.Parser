@@ -6,8 +6,8 @@ namespace PoliWebSearch.Parser.ConsoleApp.Arguments
 {
     public class ProgramArguments
     {
-        public string EnvFolder { get; set; }
-        public string Command { get; set; }
+        public string EnvFolder { get; set; } = string.Empty;
+        public string Command { get; set; } = string.Empty;
 
         public bool HasEnvFolder => !EnvFolder.Equals(string.Empty);
         public bool HasCommand => !Command.Equals(string.Empty);

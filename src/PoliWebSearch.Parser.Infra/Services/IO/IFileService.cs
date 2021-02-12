@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PoliWebSearch.Parser.Infra.Services.File
+namespace PoliWebSearch.Parser.Infra.Services.IO
 {
     /// <summary>
     /// Useful File operations (System.IO)
@@ -20,5 +20,22 @@ namespace PoliWebSearch.Parser.Infra.Services.File
         /// <param name="dirPath"></param>
         /// <returns></returns>
         bool DirExists(string dirPath);
+
+
+        /// <summary>
+        /// Get amount of file of a directory
+        /// </summary>
+        /// <param name="dirPath"></param>
+        /// <returns></returns>
+        int GetAmountOfFilesInDir(string dirPath);
+
+
+        /// <summary>
+        /// Write string to a file
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="path"></param>
+        void WriteAllText(string content, string path);
+
     }
 }

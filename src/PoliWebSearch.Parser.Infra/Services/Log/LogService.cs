@@ -60,8 +60,8 @@ namespace PoliWebSearch.Parser.Infra.Services.Log
             if (!Directory.Exists(logDirectory)) {
                 Directory.CreateDirectory(logDirectory);
             }
-            int logFileCount = Directory.GetFiles(logDirectory).Length + 1;
-            return Path.Combine(logDirectory, $"{logFileCount}_Parser_Log.txt");
+
+            return Path.Combine(logDirectory, $"{configuratorService.AppConfig.ExecutionId}_Parser_Log.txt");
         }
 
         // <inheritdoc/>

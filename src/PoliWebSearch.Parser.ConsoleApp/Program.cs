@@ -6,8 +6,9 @@ using PoliWebSearch.Parser.FileParsers.Tse.Service;
 using PoliWebSearch.Parser.Infra.Configurator;
 using PoliWebSearch.Parser.Infra.Resolver;
 using PoliWebSearch.Parser.Infra.Services.Clock;
-using PoliWebSearch.Parser.Infra.Services.File;
+using PoliWebSearch.Parser.Infra.Services.IO;
 using PoliWebSearch.Parser.Infra.Services.Log;
+using PoliWebSearch.Parser.Infra.Services.Result;
 using PoliWebSerach.Parser.DB.Operator;
 using PoliWebSerach.Parser.DB.Services.Admin;
 using PoliWebSerach.Parser.DB.Services.Database;
@@ -56,10 +57,10 @@ namespace PoliWebSearch.Parser.ConsoleApp
             if (!commandArgs.HasEnvFolder) {
                 throw new Exception("Need to pass env folder for the app to execute");
             }
-            
+
             ResolveInterfaces();
             InitializeIntefaces(commandArgs.EnvFolder);
-            
+
             if (commandArgs.HasCommand) {
                 await commandsManager.ExecuteSingleCommand(commandArgs.Command);
             }
@@ -87,6 +88,8 @@ namespace PoliWebSearch.Parser.ConsoleApp
             builder.RegisterType<ServiceResolver>().As<IServiceResolver>().SingleInstance();
             builder.RegisterType<AdminService>().As<IAdminService>().SingleInstance();
             builder.RegisterType<TseCandidateParser>().As<ITseCandidateParser>().SingleInstance();
+            builder.RegisterType<ResultService>().As<IResultService>().SingleInstance();
+
             container = builder.Build();
         }
 

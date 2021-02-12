@@ -4,7 +4,7 @@ using PoliWebSearch.Parser.Domain.FileParsing.Tse.Candidate;
 using PoliWebSearch.Parser.Domain.Vertices;
 using PoliWebSearch.Parser.Infra.Configurator;
 using PoliWebSearch.Parser.Infra.Services.Clock;
-using PoliWebSearch.Parser.Infra.Services.File;
+using PoliWebSearch.Parser.Infra.Services.IO;
 using PoliWebSearch.Parser.Infra.Services.Log;
 using PoliWebSerach.Parser.DB.Operator;
 using PoliWebSerach.Parser.DB.Services.Database;
@@ -93,7 +93,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
                                 Cpf = x.CandidateCpf,
                                 BirthDate = x.CandidateBirthDateAsDateTime,
                                 Emails = new List<string>() { x.CandidateEmail },
-                                Genders = new List<string>() { x.CandidateGender } 
+                                Genders = new List<string>() { x.CandidateGender }
                             }
                         ).ToList();
 

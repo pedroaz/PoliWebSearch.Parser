@@ -1,6 +1,7 @@
 ﻿using Gremlin.Net.Driver.Exceptions;
 using Newtonsoft.Json;
 using PoliWebSearch.Parser.Infra.Services.Log;
+using PoliWebSearch.Parser.Infra.Services.Result;
 using PoliWebSerach.Parser.DB.Services.Database;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,18 +25,21 @@ namespace PoliWebSerach.Parser.DB.Services.Admin
     {
         private readonly IDatabaseService databaseService;
         private readonly ILogService logService;
+        private readonly IResultService resultService;
 
-        public AdminService(IDatabaseService databaseService, ILogService logService)
+        public AdminService(IDatabaseService databaseService, ILogService logService, IResultService resultService)
         {
             this.databaseService = databaseService;
             this.logService = logService;
+            this.resultService = resultService;
         }
 
         // <inheritdoc/>
         public async Task<long> CountDatabase()
         {
-            var result = JsonConvert.DeserializeObject<List<dynamic>>(await databaseService.ExecuteCustomQueryWithReturnValue("g.V().count()"));
+            var result = JsonConvert.DeserializeObject<List<long>>(await databaseService.ExecuteCustomQueryWithReturnValue("g.V().count()"));
             logService.Log($"Current count of the database: {result.First()}", LogType.Admin);
+            resultService.AddDatabaseCount(result.First());
             return result.First();
         }
 
