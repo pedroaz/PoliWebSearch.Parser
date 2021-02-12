@@ -6,6 +6,7 @@ project.lock.json
 nupkg/
 
 *Log.txt
+*Result.json
 appConfig.json
 
 # Visual Studio Code
