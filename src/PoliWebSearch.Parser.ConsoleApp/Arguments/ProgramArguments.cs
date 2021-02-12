@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PoliWebSearch.Parser.ConsoleApp.Arguments
@@ -7,10 +8,10 @@ namespace PoliWebSearch.Parser.ConsoleApp.Arguments
     public class ProgramArguments
     {
         public string EnvFolder { get; set; } = string.Empty;
-        public string Command { get; set; } = string.Empty;
+        public List<string> Commands { get; set; } = new List<string>();
 
         public bool HasEnvFolder => !EnvFolder.Equals(string.Empty);
-        public bool HasCommand => !Command.Equals(string.Empty);
+        public bool HasCommands => Commands.Any();
 
         public ProgramArguments(string[] args)
         {
@@ -18,8 +19,8 @@ namespace PoliWebSearch.Parser.ConsoleApp.Arguments
                 EnvFolder = args[0];
             }
 
-            if(args.Length > 1) {
-                Command = args[1];
+            for (int i = 1; i < args.Length; i++) {
+                Commands.Add(args[i]);
             }
         }
     }

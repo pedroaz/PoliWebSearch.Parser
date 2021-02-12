@@ -91,7 +91,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
                             new PersonVertice() {
                                 Names = new List<string>() { x.CandidateName, x.SocialCandidateName, x.CandidateNameOnCedule },
                                 Cpf = x.CandidateCpf,
-                                BirthDate = x.CandidateBirthDateAsDateTime,
+                                BirthDate = x.CandidateBirthDate,
                                 Emails = new List<string>() { x.CandidateEmail },
                                 Genders = new List<string>() { x.CandidateGender }
                             }

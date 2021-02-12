@@ -4,6 +4,7 @@ using PoliWebSearch.Parser.FileParsers.Tse.Service;
 using PoliWebSearch.Parser.Infra.Services.Log;
 using PoliWebSerach.Parser.DB.Services.Admin;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PoliWebSearch.Parser.ConsoleApp.Commands
@@ -26,12 +27,24 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
             this.adminService = adminService;
         }
 
-        public async Task<bool> ExecuteSingleCommand(string command)
+        public async Task ExecuteListOfCommands(List<string> commands)
+        {
+            foreach (var command in commands) {
+                await ExecuteCommand(command);
+            }
+        }
+
+        /// <summary>
+        /// Execute a single command. If a second parameter is passsed on the console app this method will be executed
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns>Returns true if the application should end</returns>
+        public async Task<bool> ExecuteCommand(string command)
         {
             logService.Log($"Command recieved: {command}", LogType.Loop);
 
             if (command == "exit") {
-                return await Task.FromResult(true);
+                return await Task.FromResult(false);
             }
 
             var splittedCommand = command.Split(" ");
@@ -42,7 +55,7 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
                     _ => Task.FromResult(1)
                 );
 
-            return await Task.FromResult(false);
+            return await Task.FromResult(true);
         }
 
         // <inheritdoc/>
@@ -51,7 +64,7 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
             while (true) {
                 logService.Log($"Please type a new command. Or type --help if you don't know what you are doing", LogType.Loop);
                 var currentCommand = Console.ReadLine();
-                var shouldExit = await ExecuteSingleCommand(currentCommand);
+                var shouldExit = !await ExecuteCommand(currentCommand);
                 if (shouldExit) break;
             }
         }

@@ -31,7 +31,7 @@ namespace PoliWebSearch.Parser.Domain.Vertices
         /// <summary>
         /// Birth Date of the person
         /// </summary>
-        public DateTime BirthDate { get; set; }
+        public string BirthDate { get; set; }
 
         /// <summary>
         /// Genders that the person was once identified with

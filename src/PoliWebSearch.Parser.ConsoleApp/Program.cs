@@ -32,10 +32,10 @@ namespace PoliWebSearch.Parser.ConsoleApp
         /// Main entry point for the application
         /// </summary>
         /// <param name="args">Should recieve the App Env</param>
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
             try {
-                MainAsync(args).Wait();
+                return MainAsync(args).Result;
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);
@@ -48,7 +48,7 @@ namespace PoliWebSearch.Parser.ConsoleApp
         /// </summary>
         /// <param name="args">Should recieve the App Env</param>
         /// <returns></returns>
-        private async static Task MainAsync(string[] args)
+        private async static Task<int> MainAsync(string[] args)
         {
             LogService.Print("*** Starting Poli Web Search ***");
             LogService.Print("*** Initializing intefaces ***");
@@ -61,13 +61,14 @@ namespace PoliWebSearch.Parser.ConsoleApp
             ResolveInterfaces();
             InitializeIntefaces(commandArgs.EnvFolder);
 
-            if (commandArgs.HasCommand) {
-                await commandsManager.ExecuteSingleCommand(commandArgs.Command);
+            if (commandArgs.HasCommands) {
+                await commandsManager.ExecuteListOfCommands(commandArgs.Commands);
             }
             else {
                 await commandsManager.Loop();
             }
             LogService.Print("*** Finished console app ***");
+            return int.Parse(configuratorService.AppConfig.ExecutionId);
         }
 
         /// <summary>

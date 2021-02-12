@@ -15,7 +15,8 @@ namespace PoliWebSerach.Parser.DB.Services.Admin
     public enum AdminOperations
     {
         count,
-        drop
+        drop,
+        custom
     }
 
     /// <summary>
@@ -37,9 +38,15 @@ namespace PoliWebSerach.Parser.DB.Services.Admin
         // <inheritdoc/>
         public async Task<long> CountDatabase()
         {
+            long count = await InternalCountDatabase();
+            resultService.AddDatabaseCount(count);
+            return count;
+        }
+
+        private async Task<long> InternalCountDatabase()
+        {
             var result = JsonConvert.DeserializeObject<List<long>>(await databaseService.ExecuteCustomQueryWithReturnValue("g.V().count()"));
             logService.Log($"Current count of the database: {result.First()}", LogType.Admin);
-            resultService.AddDatabaseCount(result.First());
             return result.First();
         }
 
@@ -48,7 +55,6 @@ namespace PoliWebSerach.Parser.DB.Services.Admin
         {
             logService.Log("Droping the database. This operation may take a while", LogType.Admin);
 
-            await CountDatabase();
             do {
                 logService.Log("Executing the drop query", LogType.Admin);
                 try {
@@ -57,7 +63,7 @@ namespace PoliWebSerach.Parser.DB.Services.Admin
                 catch (ResponseException) {
                     logService.Log("Server probabbbly timed out. But that's expected, executing the drop query again!", LogType.Admin);
                 }
-            } while (await CountDatabase() > 0);
+            } while (await InternalCountDatabase() > 0);
         }
     }
 }

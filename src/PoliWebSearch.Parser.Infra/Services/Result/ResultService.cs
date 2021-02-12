@@ -31,7 +31,7 @@ namespace PoliWebSearch.Parser.Infra.Services.Result
             var path = Path.Combine(configuratorService.AppConfig.ResultsDirectory, $"{configuratorService.AppConfig.ExecutionId}_Parser_Result.json");
             var jsonString = JsonConvert.SerializeObject(Data, Formatting.Indented);
             fileService.WriteAllText(jsonString, path);
-            logService.Log("Result File Updated");
+            logService.Log("Result File Updated", LogType.Result);
         }
     }
 }

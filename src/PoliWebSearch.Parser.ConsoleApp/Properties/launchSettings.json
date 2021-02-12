@@ -2,7 +2,7 @@
   "profiles": {
     "PoliWebSearch.Parser.ConsoleApp": {
       "commandName": "Project",
-      "commandLineArgs": "c:\\Users\\Pedro\\Desktop\\dev\\PoliWebSearch\\AppEnv\\"
+      "commandLineArgs": "c:\\Users\\Pedro\\Desktop\\dev\\PoliWebSearchProject\\AppEnv\\"
     }
   }
 }

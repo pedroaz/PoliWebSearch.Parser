@@ -14,5 +14,11 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands.Options
         /// </summary>
         [Option(Default = "", Required = true, HelpText = "Admin operations: [count|drop].")]
         public AdminOperations operation { get; set; }
+
+        /// <summary>
+        /// Custom query to be executed if operation is set to custom
+        /// </summary>
+        [Option(Default = "", Required = false, HelpText = "Custom query to be executed if operation is set to custom")]
+        public string query { get; set; }
     }
 }
