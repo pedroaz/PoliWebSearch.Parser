@@ -85,6 +85,9 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
                 case AdminOperations.drop:
                     await adminService.DropDatabase();
                     break;
+                case AdminOperations.custom:
+                    await adminService.ExecuteCustomOperation(options.query);
+                    break;
             }
             return 0;
         }

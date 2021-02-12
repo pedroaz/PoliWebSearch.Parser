@@ -1,4 +1,6 @@
 ﻿using Gremlin.Net.Driver;
+using Newtonsoft.Json;
+using PoliWebSearch.Parser.Domain.Database;
 using PoliWebSearch.Parser.Infra.Configurator;
 using PoliWebSearch.Parser.Infra.Resolver;
 using PoliWebSearch.Parser.Infra.Services.Clock;
@@ -96,6 +98,11 @@ namespace PoliWebSerach.Parser.DB.Services.Database
         {
             var databaseOperator = serviceResolver.ResolveService<IDatabaseOperator>().Initialize(server);
             return await databaseOperator.ExecuteCustomQuery(query);
+        }
+
+        public List<DatabaseResultModel> ConvertResultToModel(string jsonResult)
+        {
+            return JsonConvert.DeserializeObject<List<DatabaseResultModel>>(jsonResult);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using PoliWebSearch.Parser.Domain.Database;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PoliWebSerach.Parser.DB.Services.Admin
 {
@@ -17,5 +19,10 @@ namespace PoliWebSerach.Parser.DB.Services.Admin
         /// </summary>
         /// <returns></returns>
         Task DropDatabase();
+        /// <summary>
+        /// Execute a custom operation on the database and returns the result
+        /// </summary>
+        /// <returns></returns>
+        Task<List<DatabaseResultModel>> ExecuteCustomOperation(string operation);
     }
 }

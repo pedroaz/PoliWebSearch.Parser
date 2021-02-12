@@ -1,4 +1,5 @@
-﻿using PoliWebSerach.Parser.DB.Operator;
+﻿using PoliWebSearch.Parser.Domain.Database;
+using PoliWebSerach.Parser.DB.Operator;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,6 +20,13 @@ namespace PoliWebSerach.Parser.DB.Services.Database
         /// <param name="query"></param>
         /// <returns></returns>
         Task<string> ExecuteCustomQueryWithReturnValue(string query);
+
+        /// <summary>
+        /// Converts a query result to a model
+        /// </summary>
+        /// <param name="jsonResult"></param>
+        /// <returns></returns>
+        List<DatabaseResultModel> ConvertResultToModel(string jsonResult);
 
         /// <summary>
         /// Initialzes the database service

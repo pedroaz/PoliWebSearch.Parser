@@ -3,6 +3,7 @@ using Gremlin.Net.Driver;
 using Gremlin.Net.Structure.IO.GraphSON;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PoliWebSearch.Parser.Domain.Database;
 using PoliWebSearch.Parser.Infra.Services.Log;
 using System;
 using System.Collections.Generic;
@@ -190,6 +191,7 @@ namespace PoliWebSerach.Parser.DB.Operator
                 });
                 array.Add(JsonConvert.DeserializeObject(jsonObject));
             }
+
             return array.ToString();
         }
     }

@@ -64,7 +64,7 @@ namespace PoliWebSearch.Parser.IntegrationTests
         public void IntegrationTest()
         {
 
-            // 1
+            // 1 - Clear the database and guarantee it's clear
             // Arrange
             // Act
             int index = Program.Main(new string[] { EnvDir, "admin --operation=drop", "admin --operation=count"});
@@ -72,15 +72,26 @@ namespace PoliWebSearch.Parser.IntegrationTests
             var result = GetResultData(index);
             result.GraphCounts[0].Should().Be(0);
 
-            // 2
+            // 2 - Execute subset of candidatos file
             // Act
-            index = Program.Main(new string[] { EnvDir, "tse --source=candidatos --dropfirst", "admin --operation=count" });
+
+            var query = "g.V().has('Cpf','29422644895')";
+
+            index = Program.Main(new string[] { EnvDir, 
+                "tse --source=candidatos --dropfirst", 
+                "admin --operation=count",
+                $"admin --operation=custom --query={query}"
+            });
             // Assert
             result = GetResultData(index);
             result.GraphCounts[0].Should().BeGreaterThan(100);
 
+            var model = result.QueryResults[query];
+            model[0].properties["Cpf"][0].value.Should().Be("29422644895");
+            model[0].properties["Emails"][0].value.Should().Be("ELEICOES2020MUNICIPAL@GMAIL.COM");
 
-            // 3
+
+            // 3 - Clear the database again and guarantee it's clear
             // Arrange
             // Act
             index = Program.Main(new string[] { EnvDir, "admin --operation=drop", "admin --operation=count" });

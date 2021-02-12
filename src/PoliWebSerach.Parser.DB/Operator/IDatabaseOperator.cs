@@ -1,4 +1,6 @@
 ﻿using Gremlin.Net.Driver;
+using PoliWebSearch.Parser.Domain.Database;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PoliWebSerach.Parser.DB.Operator

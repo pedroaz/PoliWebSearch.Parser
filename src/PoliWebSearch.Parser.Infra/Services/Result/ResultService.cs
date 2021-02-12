@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using PoliWebSearch.Parser.Domain.Database;
 using PoliWebSearch.Parser.Infra.Configurator;
 using PoliWebSearch.Parser.Infra.Services.IO;
 using PoliWebSearch.Parser.Infra.Services.Log;
+using System.Collections.Generic;
 using System.IO;
 
 namespace PoliWebSearch.Parser.Infra.Services.Result
@@ -32,6 +34,12 @@ namespace PoliWebSearch.Parser.Infra.Services.Result
             var jsonString = JsonConvert.SerializeObject(Data, Formatting.Indented);
             fileService.WriteAllText(jsonString, path);
             logService.Log("Result File Updated", LogType.Result);
+        }
+
+        public void AddCustomQueryResult(string query, List<DatabaseResultModel> result)
+        {
+            Data.QueryResults.Add(query, result);
+            WriteResultFile();
         }
     }
 }

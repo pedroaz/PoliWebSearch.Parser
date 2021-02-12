@@ -1,5 +1,6 @@
 ﻿using Gremlin.Net.Driver.Exceptions;
 using Newtonsoft.Json;
+using PoliWebSearch.Parser.Domain.Database;
 using PoliWebSearch.Parser.Infra.Services.Log;
 using PoliWebSearch.Parser.Infra.Services.Result;
 using PoliWebSerach.Parser.DB.Services.Database;
@@ -65,5 +66,19 @@ namespace PoliWebSerach.Parser.DB.Services.Admin
                 }
             } while (await InternalCountDatabase() > 0);
         }
+
+        public async Task<List<DatabaseResultModel>> ExecuteCustomOperation(string operation)
+        {
+            logService.Log($"Executing custom operation on the database: {operation}", LogType.Admin);
+
+            var jsonResult = await databaseService.ExecuteCustomQueryWithReturnValue(operation);
+
+            var result = databaseService.ConvertResultToModel(jsonResult);
+
+            resultService.AddCustomQueryResult(operation, result);
+
+            return result;
+        }
+
     }
 }
