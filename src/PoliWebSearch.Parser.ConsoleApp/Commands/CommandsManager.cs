@@ -47,7 +47,7 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
                 return await Task.FromResult(false);
             }
 
-            var splittedCommand = command.Split(" ");
+            string[] splittedCommand = FormatCommand(command);
             var result = await CommandLine.Parser.Default.ParseArguments<TseExecutionOptions, PdtExecutionOptions, AdminExecutionOptions>(splittedCommand)
                 .MapResult(
                     (TseExecutionOptions options) => Execute(options),
@@ -56,6 +56,12 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands
                 );
 
             return await Task.FromResult(true);
+        }
+
+        private static string[] FormatCommand(string command)
+        {
+            command = command.Replace("\"", "");
+            return command.Split(" ");
         }
 
         // <inheritdoc/>

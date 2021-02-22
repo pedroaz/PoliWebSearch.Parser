@@ -3,6 +3,7 @@ using Gremlin.Net.Driver;
 using Gremlin.Net.Structure.IO.GraphSON;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PoliWebSearch.Parser.Domain.Attributes;
 using PoliWebSearch.Parser.Domain.Database;
 using PoliWebSearch.Parser.Infra.Services.Log;
 using System;
@@ -155,8 +156,12 @@ namespace PoliWebSerach.Parser.DB.Operator
         {
             foreach (var property in obj.GetType().GetProperties()) {
 
+                if (Attribute.IsDefined(property, typeof(IgnoreProperty))) continue;
+
                 var propertyName = property.Name;
                 var propertyValue = property.GetValue(obj);
+
+                if (propertyValue is null) continue;
 
                 // As we are setting on the model that this is a list, we should add it to the graph as a list too
                 if (property.PropertyType.Name == "List`1") {

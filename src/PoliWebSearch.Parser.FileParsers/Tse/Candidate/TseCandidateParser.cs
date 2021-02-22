@@ -77,6 +77,7 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
             await InserPoliticalPartyVertices(list);
             await RemoveTseLabels();
             await InsertTseBelongsToPartyEdges(list);
+            await InsertProfessionalOccupationVertices(list);
         }
 
         /// <summary>
@@ -143,6 +144,21 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
             }
 
             await databaseService.AddEdges(edgeProperties, TseCandidateBelongsToPartyEdge.LabelName, fromFilters, toFilters);
+        }
+
+        private async Task InsertProfessionalOccupationVertices(List<TseCandidateFileModel> list)
+        {
+            logService.Log("Inserting Professional Occupation Vertices");
+            var professions = list.Select(row =>
+                            new ProfessionalOccupationVertice() {
+                                OccupationCode = row.CandidateOccupationCode,
+                                ProfessionName = row.CandidateOccupation
+                            }
+                        ).ToList();
+
+            professions = professions.DistinctBy(x => x.OccupationCode).ToList();
+
+            await databaseService.AddVertices(professions, "profession", "1", ProfessionalOccupationVertice.PoliticalPartyAbbreviationPropertyName);
         }
     }
 }
