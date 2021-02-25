@@ -34,6 +34,7 @@ namespace PoliWebSearch.Parser.Domain.FileParsing.Tse.Candidate
         public string CandidateOccupation { get; set; }
         public string CandidateOccupationCode { get; set; }
         public string CandidateBirthDate { get; set; }
+        public string InternalSequentialId { get; set; }
 
         public string CandidateMaxSpending { get; set; }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
 {
     /// <summary>
-    /// Parser service for TSE files
+    /// Parser service for TSE candidate files
     /// </summary>
     public interface ITseCandidatesFileParser
     {

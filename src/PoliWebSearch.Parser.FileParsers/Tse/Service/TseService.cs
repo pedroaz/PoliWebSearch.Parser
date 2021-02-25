@@ -1,4 +1,5 @@
 ﻿using PoliWebSearch.Parser.FileParsers.Tse.Candidate;
+using PoliWebSearch.Parser.FileParsers.Tse.CandidateAssets;
 using PoliWebSearch.Parser.Infra.Services.Log;
 using PoliWebSerach.Parser.DB.Services.Admin;
 using System.Threading.Tasks;
@@ -8,7 +9,8 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
     public enum TseDataSourceType
     {
         candidatos,
-        resultados
+        resultados,
+        bens
     }
 
     public class TseService : ITseService
@@ -16,12 +18,14 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
         private readonly ILogService logService;
         private readonly IAdminService adminService;
         private readonly ITseCandidateParser candidateParser;
+        private readonly ITseCandidateAssetsParser tseCandidateAssetsParser;
 
-        public TseService(ILogService logService, IAdminService adminService, ITseCandidateParser candidateParser)
+        public TseService(ILogService logService, IAdminService adminService, ITseCandidateParser candidateParser, ITseCandidateAssetsParser tseCandidateAssetsParser)
         {
             this.logService = logService;
             this.adminService = adminService;
             this.candidateParser = candidateParser;
+            this.tseCandidateAssetsParser = tseCandidateAssetsParser;
         }
 
         // <inheritdoc/>
@@ -36,6 +40,9 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Service
                     await candidateParser.ParseCandidates(rowLimit);
                     break;
                 case TseDataSourceType.resultados:
+                    break;
+                case TseDataSourceType.bens:
+                    await tseCandidateAssetsParser.ParseCandidateAssets(rowLimit);
                     break;
             }
 

@@ -12,7 +12,7 @@ namespace PoliWebSearch.Parser.ConsoleApp.Commands.Options
         /// <summary>
         /// What is the source of your data
         /// </summary>
-        [Option(Default = "", Required = true, HelpText = "Source types: [candidatos|resultados].")]
+        [Option(Default = "", Required = true, HelpText = "Source types: [candidatos|resultados|bens].")]
         public TseDataSourceType source { get; set; }
 
         /// <summary>

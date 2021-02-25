@@ -2,7 +2,7 @@
   "profiles": {
     "PoliWebSearch.Parser.ConsoleApp": {
       "commandName": "Project",
-      "commandLineArgs": "c:\\Users\\Pedro\\Desktop\\dev\\PoliWebSearchProject\\AppEnv\\ \"tse --source=candidatos --rowlimit=10 --dropfirst\" "
+      "commandLineArgs": "c:\\Users\\Pedro\\Desktop\\dev\\PoliWebSearchProject\\AppEnv\\ \"tse --source=bens --rowlimit=10\" "
     }
   }
 }

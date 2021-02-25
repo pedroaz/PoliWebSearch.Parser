@@ -1,6 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using PoliWebSearch.Parser.Domain.FileParsing.Tse.Candidate;
+using PoliWebSearch.Parser.Domain.FileParsing.Tse.CandidateAssets;
 using PoliWebSearch.Parser.Infra.Services.Log;
 using System;
 using System.Collections.Generic;
@@ -9,24 +9,20 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
+namespace PoliWebSearch.Parser.FileParsers.Tse.CandidateAssets
 {
-    /// <summary>
-    /// Implementation of ITseCandidatesFileParser
-    /// </summary>
-    public class TseCandidatesFileParser : ITseCandidatesFileParser
+    public class TseCandidateAssetsFileParser : ITseCandidateAssetsFileParser
     {
         private readonly ILogService logService;
 
-        public TseCandidatesFileParser(ILogService logService)
+        public TseCandidateAssetsFileParser(ILogService logService)
         {
             this.logService = logService;
         }
 
-        // <inheritdoc/>
-        public List<TseCandidateFileModel> ParseCandidateFile(string filePath)
+        public List<TseCandidateAssetsFileModel> ParseCandidateAssetsFile(string filePath)
         {
-            List<TseCandidateFileModel> list = new List<TseCandidateFileModel>();
+            List<TseCandidateAssetsFileModel> list = new List<TseCandidateAssetsFileModel>();
 
             var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture) {
                 Delimiter = ";",
@@ -36,8 +32,8 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.Candidate
             try {
                 using var reader = new StreamReader(filePath, Encoding.GetEncoding("iso-8859-1"));
                 using var csv = new CsvReader(reader, csvConfig);
-                csv.Context.RegisterClassMap<TseCandidateModelMapping>();
-                list = csv.GetRecords<TseCandidateFileModel>().ToList();
+                csv.Context.RegisterClassMap<TseCandidateAssetsModelMapping>();
+                list = csv.GetRecords<TseCandidateAssetsFileModel>().ToList();
             }
             catch (Exception e) {
                 logService.Log($"Unable to parse file: {filePath}");

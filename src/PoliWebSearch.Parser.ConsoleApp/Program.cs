@@ -2,6 +2,7 @@
 using PoliWebSearch.Parser.ConsoleApp.Arguments;
 using PoliWebSearch.Parser.ConsoleApp.Commands;
 using PoliWebSearch.Parser.FileParsers.Tse.Candidate;
+using PoliWebSearch.Parser.FileParsers.Tse.CandidateAssets;
 using PoliWebSearch.Parser.FileParsers.Tse.Service;
 using PoliWebSearch.Parser.Infra.Configurator;
 using PoliWebSearch.Parser.Infra.Resolver;
@@ -90,6 +91,8 @@ namespace PoliWebSearch.Parser.ConsoleApp
             builder.RegisterType<AdminService>().As<IAdminService>().SingleInstance();
             builder.RegisterType<TseCandidateParser>().As<ITseCandidateParser>().SingleInstance();
             builder.RegisterType<ResultService>().As<IResultService>().SingleInstance();
+            builder.RegisterType<TseCandidateAssetsFileParser>().As<ITseCandidateAssetsFileParser>().SingleInstance();
+            builder.RegisterType<TseCandidateAssetsParser>().As<ITseCandidateAssetsParser>().SingleInstance();
 
             container = builder.Build();
         }
