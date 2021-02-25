@@ -27,7 +27,8 @@ namespace PoliWebSearch.Parser.Infra.Services.Log
         Loop,
         Admin,
         Database, 
-        Result
+        Result,
+        Parsing
     }
 
     /// <summary>

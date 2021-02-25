@@ -36,8 +36,8 @@ namespace PoliWebSearch.Parser.FileParsers.Tse.CandidateAssets
                 list = csv.GetRecords<TseCandidateAssetsFileModel>().ToList();
             }
             catch (Exception e) {
-                logService.Log($"Unable to parse file: {filePath}");
-                logService.Log(e.Message);
+                logService.Log($"Unable to parse file: {filePath}", LogType.Parsing, LogLevel.Error);
+                logService.Log(e);
             }
             return list;
         }
